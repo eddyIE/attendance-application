@@ -3,13 +3,13 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\StudentModel;
+use App\Models\Student;
 
 class StudentController extends Controller
 {
     public function StudentList()
     {
-        $list = StudentModel::StudentList();
-        return view('index', compact('list'));
+        $list = Student::StudentList();
+        return view('attendance.index', compact('list'));
     }
 }

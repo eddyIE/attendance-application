@@ -13,11 +13,11 @@ class SubjectController extends Controller
     {
         //Trả về view
         $list = Subject::getAll();
-        return view('subjects', compact('list'));
+        return view('other.subjects', compact('list'));
     }
     public function add()
     {
-        return view('subjects');
+        return view('other.subjects');
     }
     public function addService(Request $request)
     {
@@ -25,6 +25,6 @@ class SubjectController extends Controller
         $subject->name = $request->name;
         $subject->creditHour = $request->creditHour;
         $subject->addService();
-        return Redirect::route("subjects");
+        return Redirect::route("other.subjects");
     }
 }

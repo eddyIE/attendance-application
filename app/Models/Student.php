@@ -13,7 +13,8 @@ class Student extends Model
     public $table = 'student';
     public $timestamps = false;
 
-    public static function StudentList() {
+    public static function StudentList()
+    {
         $list = DB::select("SELECT *, DATE_FORMAT(`birthdate`,'%d/%m/%Y') as birth FROM student");
         return $list;
     }

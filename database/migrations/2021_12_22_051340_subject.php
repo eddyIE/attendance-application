@@ -15,7 +15,7 @@ class Subject extends Migration
     {
         Schema::create("subject", function (Blueprint $table) {
             $table->string("id",36);
-            $table->string("name",20)->unique();
+            $table->string("name",20);
             $table->integer("total_hours")->unsigned();
             $table->string("created_by",50);
             $table->dateTime("created_at")->useCurrent();
@@ -33,6 +33,5 @@ class Subject extends Migration
     public function down()
     {
         //
-        Schema::dropIfExists('subject');
     }
 }

@@ -15,8 +15,8 @@ class Major extends Migration
     {
         Schema::create("major", function (Blueprint $table) {
             $table->string("id",36);
-            $table->string("name",50)->unique();
-            $table->string("codename",20)->unique();
+            $table->string("name",50);
+            $table->string("codename",20);
             $table->string("created_by",50);
             $table->dateTime("created_at")->useCurrent();
 

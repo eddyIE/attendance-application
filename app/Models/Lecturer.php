@@ -6,9 +6,12 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 
-class LecturerModel extends Model
+class Lecturer extends Model
 {
     use HasFactory;
+
+    public $table = 'lecturer';
+    public $timestamps = false;
 
     public static function LecturerList() {
         $list = DB::select("SELECT * FROM lecturer");

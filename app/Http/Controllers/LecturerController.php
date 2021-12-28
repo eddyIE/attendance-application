@@ -3,12 +3,12 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\LecturerModel;
+use App\Models\Lecturer;
 
 class LecturerController extends Controller
 {
     public function LecturerList() {
-        $list = LecturerModel::LecturerList();
+        $list = Lecturer::LecturerList();
         return view('lecturer',compact('list'));
     }
 }

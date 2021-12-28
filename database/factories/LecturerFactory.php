@@ -2,12 +2,12 @@
 
 namespace Database\Factories;
 
-use App\Models\Student;
+use App\Models\Lecturer;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-class StudentFactory extends Factory
+class LecturerFactory extends Factory
 {
-    protected $model = Student::class;
+    protected $model = Lecturer::class;
     /**
      * Define the model's default state.
      *
@@ -18,15 +18,15 @@ class StudentFactory extends Factory
         return [
             'id' => uniqid(),
             'name' => $this -> faker -> name,
+            'title' => $this -> faker -> randomElement(['Instructor', 'Assistant Professor', 'Associate Professor', 'Professor']),
             'phone' => $this -> faker -> phoneNumber,
-            'parent_phone' => $this -> faker -> phoneNumber,
             'address' => $this -> faker -> address,
             'gender' => $this -> faker -> numberBetween($min = 0, $max = 1),
-            'birthdate' => $this -> faker -> dateTimeBetween('2001-01-01', '2001-12-31'),
-            'class_id' => '61c3d76e1d14c',
+            'username' => $this -> faker -> userName,
+            'password' => $this -> faker -> password,
+            'role' => '0',
             'created_by' => 'admin',
-            'created_at' => now(),
-            'full_txt_search' => null
+            'created_at' => now()
         ];
     }
 }

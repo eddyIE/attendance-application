@@ -17,7 +17,7 @@ class Course extends Migration
             $table->string("id",36);
             $table->string("name",50);
             $table->integer("credit_hours")->unsigned();
-            $table->string("major_id",36);
+            $table->integer("remain_hours")->unsigned();
             $table->string("class_id",36);
             $table->string("subject_id",36);
             $table->string("created_by",50);

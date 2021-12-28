@@ -22,6 +22,8 @@ class Lecturer extends Migration
             $table->boolean("gender");
             $table->string("username",100)->unique();
             $table->string("password",256);
+            $table->boolean("role");
+            $table->rememberToken();
             $table->string("created_by",50);
             $table->dateTime("created_at")->useCurrent();
 

@@ -15,7 +15,7 @@ class LecturerCourseRel extends Migration
     {
         Schema::create("lecturer_course_rel", function (Blueprint $table) {
             $table->string("id",36);
-            $table->integer("type");
+            $table->boolean("type");
             $table->string("lecturer_id",36);
             $table->string("course_id",36);
             $table->string("created_by",50);

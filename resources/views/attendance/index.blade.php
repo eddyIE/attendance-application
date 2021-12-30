@@ -44,7 +44,8 @@
         <h4>Tổng số giờ: 10 </h4>
         <h4>Số giờ còn lại: 10 </h4>
         <br>
-        <form action="#" method="POST">
+        <form action="{{ route('create') }}" method="POST">
+            @csrf
             <div id="studentRecords">
                 <div class="student-record">
                     <table class="table table-striped align-middle table-bordered">
@@ -56,44 +57,53 @@
                         </tr>
                         @foreach ($list as $each)
                             <tr>
+                                <input type="hidden" name="students[{{ $loop->index + 1 }}][student_id]"
+                                    value="{{ $each->id }}" />
                                 <td class="text-center">{{ $loop->index + 1 }}</td>
                                 <td class="">
                                     <span class="roll fw-bolder"><a href="#">{{ $each->name }}</a></span>
+                                    <span class="text-danger fw-bold">({{ $each->absents }}/5)</span>
+                                    <span class="fw-bold fst-italic"> - P:{{ $each->permission }}</span>
                                     <br>
                                     <span class="roll fw-lighter fst-italic">({{ $each->birthdate }})</span>
                                 </td>
                                 <td class="text-center">
-                                    <input type="radio" class="btn-check" name="<?php echo $each->id; ?>present"
-                                        value="" id="<?php echo $each->id; ?>present" checked>
-                                    <label class="btn btn-outline-success" for="<?php echo $each->id; ?>present">
+                                    <input type="radio" class="btn-check"
+                                        name="students[{{ $loop->index + 1 }}][status]" value=""
+                                        id="<?php echo $each->id; ?>_status" checked>
+                                    <label class="btn btn-outline-success" for="<?php echo $each->id; ?>_status">
                                         Có mặt
                                     </label>
                                 </td>
                                 <td class="text-center">
-                                    <input type="radio" class="btn-check" name="<?php echo $each->id; ?>present"
-                                        value="no_reason" id="<?php echo $each->id; ?>no_reason">
+                                    <input type="radio" class="btn-check"
+                                        name="students[{{ $loop->index + 1 }}][status]" value="without reason"
+                                        id="<?php echo $each->id; ?>no_reason">
                                     <label class="btn btn-outline-danger" for="<?php echo $each->id; ?>no_reason">
                                         Nghỉ
                                     </label>
 
                                 </td>
                                 <td class="text-center">
-                                    <input type="radio" class="btn-check" name="<?php echo $each->id; ?>present"
-                                        value="late" id="<?php echo $each->id; ?>late">
+                                    <input type="radio" class="btn-check"
+                                        name="students[{{ $loop->index + 1 }}][status]" value="late"
+                                        id="<?php echo $each->id; ?>late">
                                     <label class="btn btn-outline-dark" for="<?php echo $each->id; ?>late">
                                         Muộn
                                     </label>
                                 </td>
                                 <td class="text-center">
-                                    <input type="radio" class="btn-check" name="<?php echo $each->id; ?>present"
-                                        id="<?php echo $each->id; ?>with_reason" autocomplete="off">
+                                    <input type="radio" class="btn-check"
+                                        name="students[{{ $loop->index + 1 }}][status]"
+                                        id="<?php echo $each->id; ?>with_reason" autocomplete="off" value="with reason">
                                     <label class="btn btn-outline-primary" for="<?php echo $each->id; ?>with_reason">
                                         Có phép
                                     </label>
                                 </td>
                                 <td>
-                                    <input type="text" class="form-control" name="absent_reason" id="absent_reason"
-                                        placeholder="Lý do nghỉ (nếu có)">
+                                    <input type="text" class="form-control"
+                                        name="students[{{ $loop->index + 1 }}][absent_reason]"
+                                        id="<?php echo $each->id; ?>_absent_reason" placeholder="Lý do nghỉ (nếu có)">
                                 </td>
                             </tr>
                         @endforeach
@@ -126,6 +136,15 @@
                     </div>
                 </div>
             </div>
+            <br>
+            Giờ bắt đầu:
+            <input type="time" class="timepicker" id="start" name="start" min="06:00" max="23:00" required>
+            Giờ kết thúc:
+            <input type="time" class="timepicker" id="end" name="end" min="06:00" max="23:00" required>
+            <br>
+            <br>
+            <textarea class="form-control" placeholder="Ghi chú:" rows="3"></textarea>
+            <br>
             <br>
             <button class="btn btn-primary" data-toggle="modal" data-target="bs-example-modal-sm">Hỗ trợ</button>
             <button id="submit" class="btn btn-success" type="submit">Lưu điểm danh</button>

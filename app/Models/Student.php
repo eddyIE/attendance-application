@@ -9,7 +9,17 @@ use DB;
 class Student extends Model
 {
     use HasFactory;
-    public $list;
+    public $id;
+    public $name;
+    public $phone;
+    public $parent_phone;
+    public $address;
+    public $gender;
+    public $birthdate;
+    public $class_id;
+    public $created_by;
+    public $created_at;
+    public $full_text_search;
 
     public static function StudentList()
     {

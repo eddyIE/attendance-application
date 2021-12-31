@@ -26,4 +26,10 @@ class Student extends Model
         $list = DB::select("SELECT * FROM STUDENT");
         return $list;
     }
+
+    public static function findByClassId($classId)
+    {
+        $list = DB::select("SELECT * FROM STUDENT where class_id = ?", [$classId]);
+        return $list;
+    }
 }

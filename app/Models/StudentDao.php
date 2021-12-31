@@ -27,10 +27,15 @@ class StudentDao extends Model
         $permissions = array();
         self::getAbsentQuantity($courseId, $absents, $permissions);
 
-        $students = Student::StudentList();
+        $course = Course::findById($courseId);
+        if (!isset($course)) {
+            return;
+        }
+        $students = Student::findByClassId($course[0]->class_id);
         if (!isset($students)) {
             return $result;
         }
+        // Chuẩn bị dữ liệu
         foreach ($students as $student) {
             $newStudent = new StudentDao();
             $newStudent->id = $student->id;
@@ -44,6 +49,7 @@ class StudentDao extends Model
         return $result;
     }
 
+    // Lấy số lượng buổi nghỉ/phép
     private static function getAbsentQuantity($courseId, &$absents, &$permissions)
     {
         $lessons = Lesson::findByCourseId($courseId);
@@ -60,10 +66,14 @@ class StudentDao extends Model
                 if (!isset($permissions[$attend->student_id])) {
                     $permissions[$attend->student_id] = 0;
                 }
-                if ($attend->status == 'late') {
+                if ($attend->status == 'without reason') {
                     $absents[$attend->student_id] += 1;
-                } else if ($attend->status == 'without reason') {
-                    $absents[$attend->student_id] = ceil($absents[$attend->student_id] + 0.33);
+                } else if ($attend->status == 'late') {
+                    $absents[$attend->student_id] += 0.3;
+                    // Xử lí 0.9 -> 1
+                    if ($absents[$attend->student_id] * 10 % 10 == 9) {
+                        $absents[$attend->student_id] += 0.1;
+                    }
                 } else {
                     $permissions[$attend->student_id] += 1;
                 }

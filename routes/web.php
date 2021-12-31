@@ -5,6 +5,7 @@ use App\Http\Controllers\LopController;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\SubjectController;
 use App\Http\Controllers\AttendanceController;
+use App\Http\Controllers\CourseController;
 
 /*
 |--------------------------------------------------------------------------
@@ -39,8 +40,7 @@ Route::get('/subject/add', [SubjectController::class, 'getAll'])->name('getAll')
 Route::post('/subject/update', [SubjectController::class, 'getAll'])->name('getAll');
 Route::get('/subject/delete', [SubjectController::class, 'getAll'])->name('getAll');
 
-Route::get("/index", [StudentController::class, "StudentList"]);
-
+// Route::get("/index", [StudentController::class, "StudentList"]);
+Route::get("/index", [CourseController::class, "init"]);
 Route::post("/index", [AttendanceController::class, 'create'])->name('create');
-
-?>
+Route::post("/course", [StudentController::class, "StudentList"]);

@@ -22,6 +22,7 @@ class AttendanceController extends Controller
         $lesson->start = $request->start;
         $lesson->end = $request->end;
         $lesson->note = $request->note;
+        $lesson->courseId = $request->all()['current-course-id'];
         $lesson->createdAt = Carbon::now();
         $lesson->create();
 

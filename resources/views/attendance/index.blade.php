@@ -33,28 +33,47 @@
                 <li class="nav-item"><a class="nav-link text-white fs-5" href="#">Logout</a></li>
             </ul>
         </div>
-    </nav></br><br>
-
+    </nav><br><br>
 
     <div class="container">
-
-        {{-- #TODO: Truyền các thông tin tên gv, tên lớp vào đây --}}
-        <h2>Chào mừng, giảng viên </h2>
-        <h3>Lớp: BTEC-C01K11</h3>
-        <h4>Tổng số giờ: 10 </h4>
-        <h4>Số giờ còn lại: 10 </h4>
-        <br>
-        <form action="{{ route('create') }}" method="POST">
+        {{-- Form chọn lớp --}}
+        <form action="course" method="POST">
             @csrf
-            <div id="studentRecords">
-                <div class="student-record">
-                    <table class="table table-striped align-middle table-bordered">
-                        <tr class="bg-dark">
-                            <th td class="text-center fs-5 text-white">STT</th>
-                            <th class="fs-5 text-white">Tên sinh viên</th>
-                            <th td class="text-center fs-5 text-white" colspan="4">Điểm danh</th>
-                            <th class="fs-5 text-white">Ghi chú</th>
-                        </tr>
+            <select name="course-id" id="class_selector" class="form-control">
+                @foreach ($courses as $course)
+                    <option value="<?php echo $course->id; ?>">{{ $course->name }}</option>
+                @endforeach
+            </select>
+            <input type="submit" class="btn btn-primary fs-5 fw-bold fst-italic text-white mt-2" value="Chọn lớp" />
+            <br>
+        </form>
+        {{-- Thông tin chung --}}
+        {{-- #TODO: Truyền các thông tin tên gv, tên lớp vào đây --}}
+        <span name="general-info">
+            <h2>Giảng viên: Lê Tuệ Minh</h2>
+            <h4>Lớp: IT_1</h4>
+            <h4>Tổng số giờ: 10 </h4>
+            <h4>Số giờ còn lại: 10 </h4>
+        </span>
+        <br>
+
+        {{-- Danh sách điểm danh --}}
+        <div id="studentRecords">
+            <form action="{{ route('create') }}" method="POST">
+                @csrf
+                {{-- Thông tin khóa học đang được chọn --}}
+                @isset($currentCourseId)
+                    <input type="hidden" name='current-course-id' value='<?php echo $currentCourseId; ?>'>
+                @endisset
+
+                <table class="table table-striped align-middle table-bordered">
+                    <tr class="bg-dark">
+                        <th td class="text-center fs-5 text-white">STT</th>
+                        <th class="fs-5 text-white">Tên sinh viên</th>
+                        <th td class="text-center fs-5 text-white" colspan="4">Điểm danh</th>
+                        <th class="fs-5 text-white">Ghi chú</th>
+                    </tr>
+                    @isset($list)
                         @foreach ($list as $each)
                             <tr>
                                 <input type="hidden" name="students[{{ $loop->index + 1 }}][student_id]"
@@ -107,48 +126,52 @@
                                 </td>
                             </tr>
                         @endforeach
-                    </table>
-                </div>
-            </div>
-            <div class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel"
-                aria-hidden="true">
-                <div class="modal-dialog modal-sm">
-                    <div class="modal-content">
-                        <h2 class="text-center"> Instructions </h2>
-                        <hr>
-                        <ol class="text-left">
-                            <li>Click on any student's roll number to see his/her records, attendance percentage etc.
-                            </li>
-                            <li>The number next to any student shows the number of days he/she has attended your class
-                            </li>
-                            <li>Click the <button class="btn">A</button> button next to that roll number to
-                                mark
-                                that student as present</li>
-                            <li>Click the <button class="btn btn-success">P</button> button if you have accidentally
-                                marked
-                                that student as present</li>
-                            <li>Click the <button class="btn btn-danger">&times;</button> button to delete that roll
-                                number
-                                (can't undo this action)</li>
-                            <li>Click the <button class="btn btn-success">Send</button> button at top to save your
-                                attendance details</li>
-                        </ol>
+                    @endisset
+                </table>
+
+                <div class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog"
+                    aria-labelledby="mySmallModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-sm">
+                        <div class="modal-content">
+                            <h2 class="text-center"> Instructions </h2>
+                            <hr>
+                            <ol class="text-left">
+                                <li>Click on any student's roll number to see his/her records, attendance percentage
+                                    etc.
+                                </li>
+                                <li>The number next to any student shows the number of days he/she has attended your
+                                    class
+                                </li>
+                                <li>Click the <button class="btn">A</button> button next to that roll number
+                                    to
+                                    mark
+                                    that student as present</li>
+                                <li>Click the <button class="btn btn-success">P</button> button if you have accidentally
+                                    marked
+                                    that student as present</li>
+                                <li>Click the <button class="btn btn-danger">&times;</button> button to delete that roll
+                                    number
+                                    (can't undo this action)</li>
+                                <li>Click the <button class="btn btn-success">Send</button> button at top to save your
+                                    attendance details</li>
+                            </ol>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <br>
-            Giờ bắt đầu:
-            <input type="time" class="timepicker" id="start" name="start" min="06:00" max="23:00" required>
-            Giờ kết thúc:
-            <input type="time" class="timepicker" id="end" name="end" min="06:00" max="23:00" required>
-            <br>
-            <br>
-            <textarea class="form-control" placeholder="Ghi chú:" rows="3"></textarea>
-            <br>
-            <br>
-            <button class="btn btn-primary" data-toggle="modal" data-target="bs-example-modal-sm">Hỗ trợ</button>
-            <button id="submit" class="btn btn-success" type="submit">Lưu điểm danh</button>
-        </form>
+                <br>
+                Giờ bắt đầu:
+                <input type="time" class="timepicker" id="start" name="start" min="06:00" max="23:00" required>
+                Giờ kết thúc:
+                <input type="time" class="timepicker" id="end" name="end" min="06:00" max="23:00" required>
+                <br>
+                <br>
+                <textarea class="form-control" placeholder="Ghi chú:" rows="3"></textarea>
+                <br>
+                <br>
+                <button class="btn btn-primary" data-toggle="modal" data-target="bs-example-modal-sm">Hỗ trợ</button>
+                <button id="submit" class="btn btn-success" type="submit">Lưu điểm danh</button>
+            </form>
+        </div>
     </div>
 </body>
 

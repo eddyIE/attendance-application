@@ -32,4 +32,21 @@ class Lesson extends Model
     {
         return DB::select('select * from lesson where course_id = ?', [$courseId]);
     }
+
+    public static function findByDate($date)
+    {
+        $query = "select * from lesson where created_at like '%$date%'";
+        return DB::select($query);
+    }
+
+    public function updateLesson(Lesson $lesson)
+    {
+        $query = "UPDATE lesson SET
+        start='$lesson->start',
+        end='$lesson->end',
+        note='$lesson->note'
+        WHERE `id`='$lesson->id'";
+
+        return DB::update($query);
+    }
 }

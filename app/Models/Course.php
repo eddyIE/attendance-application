@@ -23,4 +23,16 @@ class Course extends Model
     {
         return DB::select("select * from course where id = ?", [$id]);
     }
+
+    public static function updateFinishedHour($id, $lessonDuration)
+    {
+        $query = "
+        UPDATE course
+        SET
+            finished_hour = finished_hour + $lessonDuration,
+            finished_lesson = finished_lesson + 1
+        WHERE `id` = '$id'
+        ";
+        DB::update($query);
+    }
 }

@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Student;
 use App\Models\StudentDao;
 use App\Http\Controllers\CourseController;
+use App\Models\ClassModel;
 
 class StudentController extends Controller
 {
@@ -16,8 +17,9 @@ class StudentController extends Controller
         $courses = CourseController::findAll();
         $currentCourse = CourseController::findById($courseId);
         if(isset($currentCourse)){
-            $currentCourseId= $currentCourse[0]->id;
-            return view('attendance.index', compact('list', 'courses', 'currentCourseId'));
+            $currentCourse = $currentCourse[0];
+            $className = ClassModel::findById($currentCourse->{'class_id'})[0]->name;
+            return view('attendance.index', compact('list', 'courses', 'currentCourse', 'className'));
         }
         return;
     }

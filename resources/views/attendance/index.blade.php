@@ -36,6 +36,7 @@
     </nav><br><br>
 
     <div class="container">
+        <h2>Giảng viên: Lê Tuệ Minh</h2>
         {{-- Form chọn lớp --}}
         <form action="course" method="POST">
             @csrf
@@ -44,16 +45,20 @@
                     <option value="<?php echo $course->id; ?>">{{ $course->name }}</option>
                 @endforeach
             </select>
-            <input type="submit" class="btn btn-primary fs-5 fw-bold fst-italic text-white mt-2" value="Chọn lớp" />
+            <input type="submit" class="btn btn-primary fs-5 fw-bold fst-italic text-white mt-2" value=" Chọn lớp" />
             <br>
         </form>
         {{-- Thông tin chung --}}
-        {{-- #TODO: Truyền các thông tin tên gv, tên lớp vào đây --}}
-        <span name="general-info">
-            <h2>Giảng viên: Lê Tuệ Minh</h2>
-            <h4>Lớp: IT_1</h4>
-            <h4>Tổng số giờ: 10 </h4>
-            <h4>Số giờ còn lại: 10 </h4>
+        <span name="general-info" class="">
+            @isset($currentCourse)
+                <h4>Lớp: <?php echo isset($className) ? $className : 'Chưa có'; ?> </h4>
+                <h4>Môn học: <?php echo isset($currentCourse->{'name'}) ? $currentCourse->{'name'} : 'Chưa có'; ?> </h4>
+                <h4>Tổng số giờ: <?php echo isset($currentCourse) ? $currentCourse->{'credit_hours'} : 0; ?> </h4>
+                <h4>
+                    Số giờ còn lại: <?php echo isset($currentCourse) ? $currentCourse->{'credit_hours'} - $currentCourse->{'finished_hour'} : 0; ?>
+                </h4>
+                <h4>Số buổi đã dạy: <?php echo isset($currentCourse->{'finished_lesson'}) ? $currentCourse->{'finished_lesson'} : 'Chưa có thông tin'; ?></h4>
+            @endisset
         </span>
         <br>
 
@@ -62,10 +67,9 @@
             <form action="{{ route('create') }}" method="POST">
                 @csrf
                 {{-- Thông tin khóa học đang được chọn --}}
-                @isset($currentCourseId)
-                    <input type="hidden" name='current-course-id' value='<?php echo $currentCourseId; ?>'>
+                @isset($currentCourse)
+                    <input type="hidden" name='current-course-id' value='<?php echo $currentCourse->id; ?>'>
                 @endisset
-
                 <table class="table table-striped align-middle table-bordered">
                     <tr class="bg-dark">
                         <th td class="text-center fs-5 text-white">STT</th>
@@ -86,7 +90,7 @@
                                     <br>
                                     <span class="roll fw-lighter fst-italic">({{ $each->birthdate }})</span>
                                 </td>
-                                <td class="text-center">
+                                <td class="text-center border border-0">
                                     <input type="radio" class="btn-check"
                                         name="students[{{ $loop->index + 1 }}][status]" value=""
                                         id="<?php echo $each->id; ?>_status" checked>
@@ -94,7 +98,7 @@
                                         Có mặt
                                     </label>
                                 </td>
-                                <td class="text-center">
+                                <td class="text-center border border-0">
                                     <input type="radio" class="btn-check"
                                         name="students[{{ $loop->index + 1 }}][status]" value="without reason"
                                         id="<?php echo $each->id; ?>no_reason">
@@ -103,7 +107,7 @@
                                     </label>
 
                                 </td>
-                                <td class="text-center">
+                                <td class="text-center border border-0">
                                     <input type="radio" class="btn-check"
                                         name="students[{{ $loop->index + 1 }}][status]" value="late"
                                         id="<?php echo $each->id; ?>late">
@@ -111,7 +115,7 @@
                                         Muộn
                                     </label>
                                 </td>
-                                <td class="text-center">
+                                <td class="text-center border border-0">
                                     <input type="radio" class="btn-check"
                                         name="students[{{ $loop->index + 1 }}][status]"
                                         id="<?php echo $each->id; ?>with_reason" autocomplete="off" value="with reason">
@@ -159,15 +163,19 @@
                     </div>
                 </div>
                 <br>
+                @php
+                    use Carbon\Carbon;
+                    $date = Carbon::now()->toDateString();
+                @endphp
+                Ngày điểm danh: <input type="date" name='current-date'
+                    class='pt-2 pb-2 ps-2 mb-2 me-4 text-primary fs-5' value="<?php echo $date; ?>">
                 Giờ bắt đầu:
-                <input type="time" class="timepicker" id="start" name="start" min="06:00" max="23:00" required>
+                <input type="time" class="me-4 pt-2 pb-2 ps-2 mb-2 timepicker" id="start" name="start" min="06:00"
+                    max="23:00" required>
                 Giờ kết thúc:
-                <input type="time" class="timepicker" id="end" name="end" min="06:00" max="23:00" required>
-                <br>
-                <br>
-                <textarea class="form-control" placeholder="Ghi chú:" rows="3"></textarea>
-                <br>
-                <br>
+                <input type="time" class="me-4 pt-2 pb-2 ps-2 mb-2 timepicker" id="end" name="end" min="06:00"
+                    max="23:00" required>
+                <textarea class="form-control mb-4 mt-4" placeholder="Ghi chú:" rows="4"></textarea>
                 <button class="btn btn-primary" data-toggle="modal" data-target="bs-example-modal-sm">Hỗ trợ</button>
                 <button id="submit" class="btn btn-success" type="submit">Lưu điểm danh</button>
             </form>

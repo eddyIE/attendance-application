@@ -24,6 +24,10 @@ class Attendance extends Model
     }
 
     public static function findByLessonId($lessonId){
-        return DB::select('select * from attendance where lesson_id = ?', [$lessonId]);
+        return DB::select('select * from attendance where `lesson_id` = ?', [$lessonId]);
+    }
+
+    public static function deleteByLessonId($lessonId){
+        DB::delete('delete from attendance where `lesson_id` = ?', [$lessonId]);
     }
 }

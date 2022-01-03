@@ -16,18 +16,23 @@ class Attendance extends Model
     public $lessonId;
     public $createdBy;
 
-    public function create(){
+    public function create()
+    {
         $this->id = uniqid();
-        DB::insert("INSERT INTO attendance(id, status, absent_reason, student_id, lesson_id, created_by)
+        DB::insert(
+            "INSERT INTO attendance(id, status, absent_reason, student_id, lesson_id, created_by)
         VALUES(?, ?, ?, ?, ?, ?)",
-        [$this->id, $this->status, $this->absentReason, $this->studentId, $this->lessonId, 'admin']);
+            [$this->id, $this->status, $this->absentReason, $this->studentId, $this->lessonId, 'admin']
+        );
     }
 
-    public static function findByLessonId($lessonId){
+    public static function findByLessonId($lessonId)
+    {
         return DB::select('select * from attendance where `lesson_id` = ?', [$lessonId]);
     }
 
-    public static function deleteByLessonId($lessonId){
+    public static function deleteByLessonId($lessonId)
+    {
         DB::delete('delete from attendance where `lesson_id` = ?', [$lessonId]);
     }
 }

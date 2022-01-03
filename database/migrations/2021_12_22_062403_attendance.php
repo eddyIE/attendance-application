@@ -19,7 +19,7 @@ class Attendance extends Migration
             $table->string("absent_reason",1000)->nullable();
             $table->string("student_id",36);
             $table->string("lesson_id",36);
-            $table->string("created_by",50)->nullable(true)->change();
+            $table->string("created_by",50);
             $table->dateTime("created_at")->useCurrent();
 
             //constraint(s)
@@ -37,6 +37,5 @@ class Attendance extends Migration
     public function down()
     {
         //
-        Schema::dropIfExists('attendance');
     }
 }

@@ -36,7 +36,7 @@ class AttendanceController extends Controller
                 $attendance->create();
             }
         }
-        // return redirect('/index');
+        return redirect('/index');
     }
 
     public function createLesson(Request $request)
@@ -79,7 +79,7 @@ class AttendanceController extends Controller
 
     public function updateCourse($courseId, $duration)
     {
-        dump('updateCourse called - course id: '. $courseId . "duration: " . $duration);
+        dump('updateCourse called - course id: ' . $courseId . "duration: " . $duration);
         Course::updateFinishedHour($courseId, $duration);
     }
 

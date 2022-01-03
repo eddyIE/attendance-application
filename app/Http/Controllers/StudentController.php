@@ -19,7 +19,7 @@ class StudentController extends Controller
         if(isset($currentCourse)){
             $currentCourse = $currentCourse[0];
             $className = ClassModel::findById($currentCourse->{'class_id'})[0]->name;
-            return view('attendance.index', compact('list', 'courses', 'currentCourse', 'className'));
+            return view('index', compact('list', 'courses', 'currentCourse', 'className'));
         }
         return;
     }

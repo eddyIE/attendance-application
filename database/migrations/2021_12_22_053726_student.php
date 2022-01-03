@@ -16,8 +16,8 @@ class Student extends Migration
         Schema::create("student", function (Blueprint $table) {
             $table->string("id",36);
             $table->string("name",50);
-            $table->string("phone",13);
-            $table->string("parent_phone",13)->nullable();
+            $table->string("phone",20);
+            $table->string("parent_phone",20)->nullable();
             $table->string("address",1000);
             $table->boolean("gender");
             $table->date("birthdate");

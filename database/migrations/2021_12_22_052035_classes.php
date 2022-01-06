@@ -15,7 +15,7 @@ class classes extends Migration
     {
         Schema::create("class", function (Blueprint $table) {
             $table->string("id",36);
-            $table->string("name",50)->unique();
+            $table->string("name",50);
             $table->integer("quantity")->unsigned();
             $table->string("major_id",36);
             $table->string("school_year_id",36);

@@ -2,29 +2,27 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="627e9af1-90f2-4414-bcd8-00bbdf2fae8b" name="Changes" comment="added course function">
-      <change afterPath="$PROJECT_DIR$/app/Http/Controllers/CourseController.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/Http/Controllers/ClassController.php" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/app/Http/Controllers/LessonController.php" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/app/Http/Controllers/MajorController.php" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/app/Http/Controllers/SchoolYearController.php" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/app/Models/ClassModel.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Models/Course.php" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/app/Models/Lesson.php" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/app/Models/Major.php" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/app/Models/SchoolYear.php" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/app/Models/StudentDao.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/css/overlayScrollbars/OverlayScrollbars.min.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/img/bkacad.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/css/datatables-bs4/dataTables.bootstrap4.min.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/js/datatables-buttons/buttons.colVis.min.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/js/datatables-buttons/buttons.print.min.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/js/datatables-buttons/dataTables.buttons.min.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/js/datatables/jquery.dataTables.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/js/datatables/jquery.dataTables.min.js" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/public/js/overlayScrollbars/jquery.overlayScrollbars.min.js" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/resources/views/class/class.blade.php" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/resources/views/class/detailClass.blade.php" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/resources/views/class/editClass.blade.php" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/resources/views/class/newClass.blade.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/views/course/course.blade.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/views/course/detailCourse.blade.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/views/course/editCourse.blade.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/views/course/newCourse.blade.php" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/resources/views/dashboard.blade.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/views/layout.blade.php" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/resources/views/major/detailMajor.blade.php" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/resources/views/major/editMajor.blade.php" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/resources/views/major/major.blade.php" afterDir="false" />
@@ -37,37 +35,15 @@
       <change afterPath="$PROJECT_DIR$/resources/views/subject/editSubject.blade.php" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/resources/views/subject/newSubject.blade.php" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/resources/views/subject/subject.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/php.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/AttendanceController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/AttendanceController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/LecturerController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/LecturerController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/LoginController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/LoginController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/LopController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/ClassController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Controllers/StudentController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/StudentController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/SubjectController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/SubjectController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Kernel.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Kernel.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Middleware/Login.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Middleware/AdminAuthenticate.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Models/Attendance.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/Attendance.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Models/Lecturer.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/Lecturer.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Middleware/Login.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Middleware/LecturerAuthenticate.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Models/Student.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/Student.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Models/Subject.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/Subject.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/composer.lock" beforeDir="false" afterPath="$PROJECT_DIR$/composer.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/factories/LecturerFactory.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/factories/LecturerFactory.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/factories/StudentFactory.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/factories/StudentFactory.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/migrations/2021_12_22_051340_subject.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2021_12_22_051340_subject.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/migrations/2021_12_22_061549_course.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2021_12_22_061549_course.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/migrations/2021_12_22_062735_course_check.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2021_12_22_062735_course_check.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/seeders/LecturerSeeder.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/seeders/LecturerSeeder.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/node_modules/.package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/.package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/css/adminlte.min.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/css/adminlte.min.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/public/js/login.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/login.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/lang/en/validation.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/lang/en/validation.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/attendance/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/attendance/index.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/index.blade.php" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/views/lecturer.blade.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/login.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/login.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/welcome.blade.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

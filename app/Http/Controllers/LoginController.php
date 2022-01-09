@@ -12,23 +12,37 @@ class LoginController extends Controller
     public function loginView(Request $request){
         if ($request->session()->has('id') && $request->session()->has('name')){
             return redirect()->route('index');
+        } else {
+            return view('login');
         }
-        return view('login');
     }
 
     public function authenticate(Request $request) {
+        $request->validate([
+            'username' => 'required',
+            'password' => 'required'
+        ]);
+
         $username = $request->get('username');
         $password = md5($request->get('password'));
 
-        $user = Login::authenticate($username, $password); //calling query from Model: Login
+        $user = Login::authenticate($username, $password); //calling query from Model: AdminAuthenticate
 
-        if (count($user) == 1) { //check if query returns 1 record
+        if (count($user) == 1) {
             $request->session()->put('id',$user[0]->id);
             $request->session()->put('name',$user[0]->name);
+            $request->session()->put('role',$user[0]->role);
 
-            return redirect()->route('index');
+            switch ($user[0]->role) {
+                case 0:
+                    return redirect()->route('index');
+                    break;
+                case 1:
+                    return redirect()->route('admin');
+                    break;
+            }
         }
-        return back();
+        return view('login');
     }
 
     public function logOut(Request $request) {

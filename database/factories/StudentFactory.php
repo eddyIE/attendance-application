@@ -23,7 +23,7 @@ class StudentFactory extends Factory
             'address' => $this -> faker -> address,
             'gender' => $this -> faker -> numberBetween($min = 0, $max = 1),
             'birthdate' => $this -> faker -> dateTimeBetween('2001-01-01', '2001-12-31'),
-            'class_id' => '61c3d76e1d14c',
+            'class_id' => '61d5a3b8b0755',                      //put class id here
             'created_by' => 'admin',
             'created_at' => now(),
             'full_txt_search' => null

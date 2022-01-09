@@ -8,11 +8,28 @@ use Illuminate\Support\Facades\DB;
 
 class CourseController extends Controller
 {
+    public function init()
+    {
+        $courses = Course::findAll();
+        return view('attendance.index', compact('courses'));
+    }
+
+    public static function findAll()
+    {
+        return Course::findAll();
+    }
+
+    public static function findById($id)
+    {
+        return Course::findById($id);
+    }
+
     public function index() {
         $data = Course::index();
 
         return view('course/course',compact('data'));
     }
+
     public function create() {
         $class = Course::classData();
         $subject = Course::subjectData();       //display data for <option></option>
@@ -22,9 +39,9 @@ class CourseController extends Controller
     }
 
     public function store(Request $request) {
-        $validate = $request->validate([        //validating:incomplete
-            'courseName' => 'required',
-            'creditHours' => 'required'
+        $request->validate([
+            'courseName' => 'required|max:50',
+            'creditHours' => 'bail|required|numeric'
         ]);
 
         $course = new Course();
@@ -39,7 +56,7 @@ class CourseController extends Controller
 
         $course->store();
 
-        return redirect()->route('course/course');
+        return redirect()->route('course');
     }
 
     public function detail(Request $request) {
@@ -61,6 +78,11 @@ class CourseController extends Controller
     }
 
     public function updates(Request $request) {
+        $request->validate([
+            'courseName' => 'required|max:50',
+            'creditHours' => 'bail|required|numeric'
+        ]);
+
         $course = new Course();
 
         $course->courseId = $request->route('id');
@@ -73,7 +95,7 @@ class CourseController extends Controller
 
         $course->updates();
 
-        return redirect()->route('course/course');
+        return redirect()->route('course');
     }
 
     public function delete(Request $request) {
@@ -83,6 +105,6 @@ class CourseController extends Controller
 
         $course->delete();
 
-        return redirect()->route('course/course');
+        return redirect()->route('course');
     }
 }

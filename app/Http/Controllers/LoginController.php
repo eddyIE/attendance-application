@@ -6,6 +6,7 @@ use App\Models\Login;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Cookie;
 
 class LoginController extends Controller
 {
@@ -19,8 +20,12 @@ class LoginController extends Controller
 
     public function authenticate(Request $request) {
         $request->validate([
-            'username' => 'required',
+            'username' => 'bail|required|min:4',
             'password' => 'required'
+        ],[
+            'username.required' => 'Tên đăng nhập không được bỏ trống.',
+            'username.min' => 'Tên đăng nhập phải chứa ít nhất 4 kí tự.',
+            'password.required' => 'Mật khẩu không được bỏ trống.'
         ]);
 
         $username = $request->get('username');
@@ -32,7 +37,6 @@ class LoginController extends Controller
             $request->session()->put('id',$user[0]->id);
             $request->session()->put('name',$user[0]->name);
             $request->session()->put('role',$user[0]->role);
-
             switch ($user[0]->role) {
                 case 0:
                     return redirect()->route('index');

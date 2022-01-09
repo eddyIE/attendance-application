@@ -41,7 +41,7 @@
 
                 <div class="card-footer">
                     <input type="submit" class="btn btn-success" value="Hoàn tất">
-                    <a href="{{ route('subject') }}" class="btn btn-secondary">Quay lại</a>
+                    <a href="{{ route('schoolyear') }}" class="btn btn-secondary">Quay lại</a>
                 </div>
             </form>
         </div>

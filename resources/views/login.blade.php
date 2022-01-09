@@ -29,11 +29,17 @@
             <h1><b>Đăng Nhập</b></h1>
         </div>
         <div class="card-body">
+            @if($errors->any())
+            <div class="alert alert-danger">
+                @foreach($errors->all() as $message)
+                {{ $message }}<br>
+                @endforeach
+            </div>
+            @else
+            <p class="login-box-msg">Sign in to start your session</p>
+            @endif
             <form action="" method="post">
                 @csrf
-                @error('username')
-                <div class="danger text-red">{{ $message }}</div>
-                @enderror
                 <div class="input-group mb-3">
                     <input type="text" class="form-control" placeholder="Username" name="username">
                     <div class="input-group-append">
@@ -42,9 +48,6 @@
                         </div>
                     </div>
                 </div>
-                @error('password')
-                <div class="danger text-red">{{ $message }}</div>
-                @enderror
                 <div class="input-group mb-3">
                     <input type="password" class="form-control" placeholder="Password" name="password">
                     <div class="input-group-append">
@@ -54,8 +57,7 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-8">
-                    </div>
+                    <div class="col-8"></div>
                     <!-- /.col -->
                     <div class="col-4">
                         <button type="submit" class="btn btn-primary btn-block">Đăng Nhập</button>

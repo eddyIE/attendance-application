@@ -24,7 +24,7 @@ class Course extends Model
         return DB::select("select * from course where id = ?", [$id]);
     }
 
-    public static function updateFinishedHour($id, $lessonDuration)
+    public static function updateFinishedTime($id, $lessonDuration)
     {
         $query = "
         UPDATE course
@@ -184,5 +184,14 @@ class Course extends Model
     {
         DB::delete("DELETE FROM lecturer_course_rel WHERE course_id = '$this->courseId'");
         DB::delete("DELETE FROM course WHERE id = '$this->courseId'");
+    }
+
+    // Tìm mọi khóa học thuốc quyền giảng viên đang đăng nhập
+    public function findAllAvailable($lecturerId)
+    {
+        return DB::select(
+            "SELECT c.* FROM course c JOIN lecturer_course_rel lcr on c.id = lcr.course_id WHERE lcr.lecturer_id = ?",
+            [$lecturerId]
+        );
     }
 }

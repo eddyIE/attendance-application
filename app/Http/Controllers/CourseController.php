@@ -6,22 +6,23 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Course;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Session;
 
 class CourseController extends Controller
 {
     //
     public function init()
     {
-        $courses = Course::findAll();
+        $courses = app('App\Models\Course')->findAllAvailable(Session::get('id'));
         return view('attendance.index', compact('courses'));
     }
 
-    public static function findAll()
+    public function findAll()
     {
         return Course::findAll();
     }
 
-    public static function findById($id)
+    public function findById($id)
     {
         return Course::findById($id);
     }
@@ -109,5 +110,16 @@ class CourseController extends Controller
         $course->delete();
 
         return redirect()->route('course/course');
+    }
+
+    public function updateFinishedTime($courseId, $duration)
+    {
+        Course::updateFinishedTime($courseId, $duration);
+    }
+
+    // Tìm mọi khóa học thuốc quyền giảng viên đang đăng nhập
+    public function findAllAvailable($lecturerId)
+    {
+        return app('App\Models\Course')->findAllAvailable($lecturerId);
     }
 }

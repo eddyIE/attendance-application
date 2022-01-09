@@ -49,4 +49,10 @@ class Lesson extends Model
 
         return DB::update($query);
     }
+
+    public function findById($id)
+    {
+        $query = "select * from lesson where id = '$id'";
+        return DB::select($query);
+    }
 }

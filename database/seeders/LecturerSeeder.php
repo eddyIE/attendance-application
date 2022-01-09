@@ -14,6 +14,6 @@ class LecturerSeeder extends Seeder
      */
     public function run()
     {
-        Lecturer::factory()->times(10)->create();
+        Lecturer::factory()->times(5)->create();
     }
 }

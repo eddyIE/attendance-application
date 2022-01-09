@@ -11,4 +11,11 @@ class LecturerController extends Controller
         $list = Lecturer::LecturerList();
         return view('lecturer',compact('list'));
     }
+
+    public function LecturerEdit(Request $request) {
+        $id = $request->id;
+        $edit = Lecturer::LecturerEdit($id);
+
+        return view('editLecturer',compact('edit'));
+    }
 }

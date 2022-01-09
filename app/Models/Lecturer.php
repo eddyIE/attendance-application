@@ -17,4 +17,9 @@ class Lecturer extends Model
         $list = DB::select("SELECT * FROM lecturer");
         return $list;
     }
+
+    public static function LecturerEdit($id) {
+        $edit = DB::select("SELECT * FROM lecturer WHERE id = ?",[$id]);
+        return $edit;
+    }
 }

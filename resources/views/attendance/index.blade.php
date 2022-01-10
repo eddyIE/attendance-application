@@ -130,7 +130,7 @@
     }
 
 </style>
-
+@section('title', 'Điểm Danh')
 <body class="hold-transition sidebar-mini layout-fixed" onload="currentDate()">
     @section('content')
         <h2>Giảng viên: {{ session('name') }}</h2>

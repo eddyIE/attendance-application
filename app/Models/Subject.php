@@ -13,26 +13,44 @@ class Subject extends Model
     public $name;
     public $creditHour;
 
-    static public function getAll()
+    public static function index()
     {
-        $list = DB::select("SELECT * FROM subject");
-        return $list;
+        $data = DB::select("SELECT *, DATE_FORMAT(created_at,'%d/%m/%Y') as cre_date FROM `subject`");
+
+        return $data;
     }
-    public function add()
+
+    public function store()
     {
-        DB::insert("INSERT INTO subject(name, credit_hour) VALUES ('$this->name', $this->creditHour) ");
+        $subjectID = uniqid();
+
+        DB::insert("INSERT INTO subject (
+                `id`,
+                `name`,
+                `total_hours`,
+                `created_by`
+                )
+                VALUES (
+                    '$subjectID',
+                    '$this->subjectName',
+                    '$this->totalHours',
+                    '$this->createdBy'
+                )");
     }
-    public function updateSubject($id)
+
+    public static function show($id)
     {
-        $lop = DB::select("SELECT * FROM subject WHERE id = ?", [$id]);
-        return $lop;
+        $data = DB::select("SELECT *, DATE_FORMAT(created_at,'%d/%m/%Y') as cre_date FROM subject WHERE id = ?", [$id]);
+        return $data;
     }
-    public function update_service()
+
+    public function updates()
     {
-        DB::update("UPDATE subject SET name = ?, credit_hour = ? WHERE id = ?", [$this->name, $this->creditHour, $this->id]);
+        DB::update("UPDATE subject SET name = ?, total_hours = ? WHERE id = ?", [$this->subjectName, $this->totalHours, $this->subjectID]);
     }
+
     public function delete()
     {
-        DB::delete("DELETE FROM subject WHERE id = ?", [$this->id]);
+        DB::delete("DELETE FROM subject WHERE id = ?", [$this->subjectID]);
     }
 }

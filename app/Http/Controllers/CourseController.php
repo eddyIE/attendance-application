@@ -18,6 +18,7 @@ class CourseController extends Controller
     }
 
     public function findAll()
+
     {
         return Course::findAll();
     }
@@ -29,6 +30,7 @@ class CourseController extends Controller
 
     public function index()
     {
+
         $data = Course::index();
 
         return view('course/course', compact('data'));
@@ -42,11 +44,10 @@ class CourseController extends Controller
         return view('course/newCourse', compact('class', 'subject', 'lecturer'));
     }
 
-    public function store(Request $request)
-    {
-        $validate = $request->validate([        //validating:incomplete
-            'courseName' => 'required',
-            'creditHours' => 'required'
+    public function store(Request $request) {
+        $request->validate([
+            'courseName' => 'required|max:50',
+            'creditHours' => 'bail|required|numeric'
         ]);
 
         $course = new Course();
@@ -61,7 +62,7 @@ class CourseController extends Controller
 
         $course->store();
 
-        return redirect()->route('course/course');
+        return redirect()->route('course');
     }
 
     public function detail(Request $request)
@@ -84,8 +85,12 @@ class CourseController extends Controller
         return view('course/editCourse', compact('data', 'class', 'subject', 'lecturer'));
     }
 
-    public function updates(Request $request)
-    {
+    public function updates(Request $request) {
+        $request->validate([
+            'courseName' => 'required|max:50',
+            'creditHours' => 'bail|required|numeric'
+        ]);
+
         $course = new Course();
 
         $course->courseId = $request->route('id');
@@ -98,7 +103,7 @@ class CourseController extends Controller
 
         $course->updates();
 
-        return redirect()->route('course/course');
+        return redirect()->route('course');
     }
 
     public function delete(Request $request)
@@ -109,7 +114,7 @@ class CourseController extends Controller
 
         $course->delete();
 
-        return redirect()->route('course/course');
+        return redirect()->route('course');
     }
 
     public function updateFinishedTime($courseId, $duration)

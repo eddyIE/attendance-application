@@ -1,5 +1,7 @@
 @extends('layout')
 
+@section('title', 'CHI TIẾT KHÓA HỌC')
+
 @section('content')
 
     <div class="col-md-6">

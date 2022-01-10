@@ -8,12 +8,10 @@ use App\Models\Lesson;
 use App\CourseController;
 use Carbon\Carbon;
 
-
 class LessonController extends Controller
 {
     public function create(Request $request)
     {
-        dump('createLesson called');
         // Tạo mới buổi học
         $lesson = new Lesson();
         $newLessonId = uniqid();
@@ -37,7 +35,6 @@ class LessonController extends Controller
 
     public function updateLesson(Request $request)
     {
-        dump('updateLesson called');
         $updatedLesson = Lesson::findByDate($request->{'current-date'})[0];
 
         $lesson = new Lesson();

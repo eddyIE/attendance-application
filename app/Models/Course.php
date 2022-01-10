@@ -58,7 +58,7 @@ class Course extends Model
                 course.name AS course_name,
                 class.name AS class,
                 subject.name AS subject,
-                course.credit_hours AS credit_hours,
+                FLOOR(course.credit_hours) AS credit_hours,
                 lecturer.name AS lecturer,
                 DATE_FORMAT(course.created_at,'%d/%m/%Y') as cre_date
             FROM `course`
@@ -67,7 +67,7 @@ class Course extends Model
             LEFT JOIN lecturer_course_rel ON course.id = lecturer_course_rel.course_id
             LEFT JOIN lecturer ON lecturer_course_rel.lecturer_id = lecturer.id
             ORDER BY cre_date ASC"
-        );                  //<<<UGLY CODE, EURGHH>>>
+        );
 
         return $data;
     }
@@ -102,7 +102,6 @@ class Course extends Model
                 `id`,
                 `name`,
                 `credit_hours`,
-                `remain_hours`,
                 `class_id`,
                 `subject_id`,
                 `created_by`
@@ -110,7 +109,6 @@ class Course extends Model
                 VALUES (
                     '$courseId',
                     '$this->courseName',
-                    '$this->creditHours',
                     '$this->creditHours',
                     '$this->class',
                     '$this->subject',
@@ -141,7 +139,7 @@ class Course extends Model
             "SELECT
                 course.id AS id,
                 course.name AS course,
-                course.credit_hours AS credit_hours,
+                FLOOR(course.credit_hours) AS credit_hours,
                 class.name AS class,
                 subject.name AS subject,
                 lecturer.name AS lecturer,
@@ -165,7 +163,7 @@ class Course extends Model
         DB::update(
             "UPDATE `course`
             SET
-                `name` = '$this->id',
+                `name` = '$this->courseName',
                 `credit_hours` = '$this->creditHours',
                 `class_id` = '$this->class',
                 `subject_id` = '$this->subject'

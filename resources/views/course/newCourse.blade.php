@@ -1,5 +1,7 @@
 @extends('layout')
 
+@section('title', 'THÊM KHÓA HỌC')
+
 @section('content')
 
     <div class="col-md-6">
@@ -15,10 +17,16 @@
                 <div class="card-body">
                     <div class="form-group">
                         <label for="name">Tên khóa học</label>
+                        @error('courseName')
+                        <div class="danger text-red" style="float:right">{{ $message }}</div>
+                        @enderror
                         <input type="text" class="form-control" id="name" name="courseName" autocomplete="off">
                     </div>
                     <div class="form-group">
                         <label for="credit_hours">Tổng số giờ</label>
+                        @error('creditHours')
+                        <div class="danger text-red" style="float:right">{{ $message }}</div>
+                        @enderror
                         <input type="text" class="form-control" id="credit_hours" name="creditHours" autocomplete="off">
                     </div>
                     <div class="row">

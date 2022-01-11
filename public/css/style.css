@@ -125,3 +125,7 @@ text {
 .-tooltip td.value{
     text-align: right;
 }
+
+.time-picker select{
+    appearance: none;
+}

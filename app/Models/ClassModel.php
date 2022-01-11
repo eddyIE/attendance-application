@@ -15,7 +15,8 @@ class ClassModel extends Model
         return DB::select('select * from class where id = ?', [$id]);
     }
 
-    public static function index() {
+    public static function index()
+    {
         $data = DB::select(
             "SELECT
                 class.id AS id,
@@ -33,17 +34,20 @@ class ClassModel extends Model
         return $data;
     }
 
-    public static function majorData() {
+    public static function majorData()
+    {
         $major = DB::select("SELECT * FROM major");
         return $major;
     }
 
-    public static function schoolyearData() {
+    public static function schoolyearData()
+    {
         $school_year = DB::select("SELECT * FROM school_year");
         return $school_year;
     }
 
-    public function store() {
+    public function store()
+    {
         $classId = uniqid();
 
         DB::insert(
@@ -62,10 +66,12 @@ class ClassModel extends Model
                     '$this->major',
                     '$this->schoolyear',
                     '$this->createdBy'
-                )");
+                )"
+        );
     }
 
-    public static function show($id) {
+    public static function show($id)
+    {
         $data = DB::select(
             "SELECT
                 class.id AS id,
@@ -87,7 +93,8 @@ class ClassModel extends Model
         return $data;
     }
 
-    public function updates() {
+    public function updates()
+    {
         DB::update(
             "UPDATE `class`
             SET
@@ -98,7 +105,8 @@ class ClassModel extends Model
         );
     }
 
-    public function delete() {
+    public function delete()
+    {
         DB::delete("DELETE FROM class WHERE id = '$this->classId'");
     }
 }

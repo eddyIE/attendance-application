@@ -20,20 +20,20 @@ use App\Http\Controllers\SchoolYearController;
 | contains the "web" middleware group. Now create something great!
 |
 */
+Route::get('/', function() { return view('layout');});
 
+Route::get('/login', [LoginController::class, 'loginView'])->name('login');
 
+Route::post('/login', [LoginController::class, 'authenticate']);
 
-Route::get('/login',[LoginController::class,'loginView'])->name('login');
-
-Route::post('/login',[LoginController::class,'authenticate']);
-
-Route::get('/logout',[LoginController::class,'logOut'])->name('logout');
+Route::get('/logout', [LoginController::class, 'logOut'])->name('logout');
 
 Route::middleware(['LecturerAuthenticate'])->group(function () {
     Route::prefix('/index')->group(function () {
         Route::get('/', [CourseController::class, 'init'])->name('index');
         Route::post("/", [AttendanceController::class, 'create'])->name('create');
-        Route::post("/course", [StudentController::class, "StudentList"]);
+        Route::post("/course", [StudentController::class, "StudentList"])->name('course_attendance');
+        Route::get('/lesson/{id}', [StudentController::class, 'getLessonAttendanceList'])->name('get_lesson');
     });
 });
 

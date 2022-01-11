@@ -25,7 +25,7 @@ class SubjectController extends Controller
     {
         $request->validate([
             'subjectName' => 'bail|required|max:20',
-            'totalHours' => 'bail|required|numeric|max:10'
+            'totalHours' => 'bail|required|numeric'
         ]);
 
         $subject = new Subject;

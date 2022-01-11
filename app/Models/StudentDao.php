@@ -4,11 +4,15 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Student;
+use App\Models\Attendance;
+use App\Models\Lesson;
+use DB;
+use Carbon\Carbon;
 
 class StudentDao extends Model
 {
     use HasFactory;
-
     public $id;
     public $name;
     public $birthdate;
@@ -16,16 +20,20 @@ class StudentDao extends Model
     public $absents;
     public $permission;
 
-    public static function findByCourseId($courseId)
+    public static function findByCourseId($courseId, $lessonDate = null)
     {
         $result = array();
 
         $absents = array();
         $permissions = array();
-        self::getAbsentQuantity($courseId, $absents, $permissions);
+        $currentStatuses = array();
+        if ($lessonDate == null) {
+            $lessonDate = Carbon::now()->toDateString();
+        }
+        self::getAbsentQuantity($courseId, $lessonDate, $absents, $permissions, $currentStatuses);
 
         $course = Course::findById($courseId);
-        if (!isset($course)) {
+        if (!isset($course) || count($course) == 0) {
             return;
         }
         $students = Student::findByClassId($course[0]->class_id);
@@ -41,18 +49,29 @@ class StudentDao extends Model
             $newStudent->class_id = $student->class_id;
             $newStudent->absents = isset($absents[$newStudent->id]) ? $absents[$newStudent->id] : 0;
             $newStudent->permission = isset($permissions[$newStudent->id]) ? $permissions[$newStudent->id] : 0;
+            $newStudent->currentStatus = isset($currentStatuses[$newStudent->id]) ? $currentStatuses[$newStudent->id] : "";
             array_push($result, $newStudent);
         }
         return $result;
     }
 
     // Lấy số lượng buổi nghỉ/phép
-    private static function getAbsentQuantity($courseId, &$absents, &$permissions)
+    private static function getAbsentQuantity($courseId, $lessonDate, &$absents, &$permissions, &$currentStatuses)
     {
         $lessons = Lesson::findByCourseId($courseId);
+
+        // Nếu buổi học đã tồn tại thì truyền data vào currentStatuses lưu trạng thái điểm danh hiện tại
+        if (app('App\Http\Controllers\LessonController')->lessonIsExist($lessonDate)) {
+            $lesson = Lesson::findByDate($lessonDate)[0];
+            $attendances = Attendance::findByLessonId($lesson->id);
+            foreach ($attendances as $attendance) {
+                $currentStatuses[$attendance->student_id] = $attendance->status;
+            }
+        }
+
+        // Đếm số buổi nghỉ/phép của sinh viên dựa theo các bản ghi attendance
         foreach ($lessons as $lesson) {
             $attends = Attendance::findByLessonId($lesson->id);
-
             if (!isset($attends)) {
                 return;
             }

@@ -9,7 +9,6 @@ use Illuminate\Support\Facades\DB;
 class Lesson extends Model
 {
     use HasFactory;
-
     public $id;
     public $start;
     public $end;
@@ -49,5 +48,11 @@ class Lesson extends Model
         WHERE `id`='$lesson->id'";
 
         return DB::update($query);
+    }
+
+    public function findById($id)
+    {
+        $query = "select * from lesson where id = '$id'";
+        return DB::select($query);
     }
 }

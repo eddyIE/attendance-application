@@ -2,43 +2,51 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Course;
+
 use Illuminate\Http\Request;
+use App\Models\Course;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Session;
 
 class CourseController extends Controller
 {
+    //
     public function init()
     {
-        $courses = Course::findAll();
+        $courses = app('App\Models\Course')->findAllAvailable(Session::get('id'));
         return view('attendance.index', compact('courses'));
     }
 
-    public static function findAll()
+    public function findAll()
+
     {
         return Course::findAll();
     }
 
-    public static function findById($id)
+    public function findById($id)
     {
         return Course::findById($id);
     }
 
-    public function index() {
+    public function index()
+    {
+
         $data = Course::index();
 
-        return view('course/course',compact('data'));
+        return view('course/course', compact('data'));
     }
-
-    public function create() {
+    public function create()
+    {
         $class = Course::classData();
         $subject = Course::subjectData();       //display data for <option></option>
         $lecturer = Course::lecturerData();
+        $checkCourse = Course::checkCourse();
 
-        return view('course/newCourse',compact('class','subject','lecturer'));
+        return view('course/newCourse', compact('class', 'subject', 'lecturer', 'checkCourse'));
     }
 
-    public function store(Request $request) {
+    public function store(Request $request)
+    {
         $request->validate([
             'courseName' => 'required|max:50',
             'creditHours' => 'bail|required|numeric'
@@ -59,14 +67,16 @@ class CourseController extends Controller
         return redirect()->route('course');
     }
 
-    public function detail(Request $request) {
+    public function detail(Request $request)
+    {
         $id = $request->id;                     //display data from id
         $data = Course::show($id);
 
-        return view('course/detailCourse',compact('data'));
+        return view('course/detailCourse', compact('data'));
     }
 
-    public function edit(Request $request) {
+    public function edit(Request $request)
+    {
         $class = Course::classData();
         $subject = Course::subjectData();       //display data for <option></option>
         $lecturer = Course::lecturerData();
@@ -74,10 +84,11 @@ class CourseController extends Controller
         $id = $request->id;                     //display data from id
         $data = Course::show($id);
 
-        return view('course/editCourse',compact('data','class','subject','lecturer'));
+        return view('course/editCourse', compact('data', 'class', 'subject', 'lecturer'));
     }
 
-    public function updates(Request $request) {
+    public function updates(Request $request)
+    {
         $request->validate([
             'courseName' => 'required|max:50',
             'creditHours' => 'bail|required|numeric'
@@ -98,7 +109,8 @@ class CourseController extends Controller
         return redirect()->route('course');
     }
 
-    public function delete(Request $request) {
+    public function delete(Request $request)
+    {
         $course = new Course();
 
         $course->courseId = $request->route('id');
@@ -106,5 +118,16 @@ class CourseController extends Controller
         $course->delete();
 
         return redirect()->route('course');
+    }
+
+    public function updateFinishedTime($courseId, $duration)
+    {
+        Course::updateFinishedTime($courseId, $duration);
+    }
+
+    // Tìm mọi khóa học thuốc quyền giảng viên đang đăng nhập
+    public function findAllAvailable($lecturerId)
+    {
+        return app('App\Models\Course')->findAllAvailable($lecturerId);
     }
 }

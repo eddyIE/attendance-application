@@ -9,7 +9,6 @@ use Illuminate\Support\Facades\DB;
 class Course extends Model
 {
     use HasFactory;
-
     public $subject;
     public $id;
     public $name;
@@ -25,7 +24,7 @@ class Course extends Model
         return DB::select("select * from course where id = ?", [$id]);
     }
 
-    public static function updateFinishedHour($id, $lessonDuration)
+    public static function updateFinishedTime($id, $lessonDuration)
     {
         $query = "
         UPDATE course
@@ -37,7 +36,22 @@ class Course extends Model
         DB::update($query);
     }
 
-    public static function index() {
+    public static function index()
+    {
+        /*$data = DB::table('course')
+            ->leftJoin('lecturer_course_rel','course.id','=','lecturer_course_rel.id')
+            ->leftJoin('lecturer','lecturer_course_rel.lecturer_id','=','lecturer.id')
+            ->join('class','course.class_id','=','class.id')
+            ->join('subject','course.subject_id','=','subject.id')
+            ->select(DB::raw(
+                'course.name AS course_name,
+                class.name AS class,
+                subject.name AS subject,
+                course.credit_hours AS credit_hours,
+                lecturer.name AS lecturer'
+            ))
+            ->get();*/      //<<<BEAUTIFUL CODE>>> but the lecturer name is returning null...
+
         $data = DB::select(
             "SELECT
                 course.id AS id,
@@ -59,28 +73,32 @@ class Course extends Model
     }
 
     /*start of CourseController::create()*/
-    public static function classData() {
+    public static function classData()
+    {
         $class = DB::select("SELECT * FROM class");
         return $class;
     }
 
-    public static function subjectData() {
+    public static function subjectData()
+    {
         $subject = DB::select("SELECT * FROM subject");
         return $subject;
     }
 
-    public static function lecturerData() {
+    public static function lecturerData()
+    {
         $lecturer = DB::select("SELECT * FROM lecturer WHERE role = 0"); //non-admin
         return $lecturer;
     }
     /*end of CourseController::create()*/
 
-    public function store() {
+    public function store()
+    {
         $courseId = uniqid();   //course id
         $lcrId = uniqid();      //lecturer_course_rel id
 
-            DB::insert(
-                "INSERT INTO course (
+        DB::insert(
+            "INSERT INTO course (
                 `id`,
                 `name`,
                 `credit_hours`,
@@ -95,9 +113,10 @@ class Course extends Model
                     '$this->class',
                     '$this->subject',
                     '$this->createdBy'
-                )");
-            DB::insert(
-                "INSERT INTO lecturer_course_rel(
+                )"
+        );
+        DB::insert(
+            "INSERT INTO lecturer_course_rel(
                 `id`,
                 `type`,
                 `lecturer_id`,
@@ -110,10 +129,12 @@ class Course extends Model
                 '$this->lecturer',
                 '$courseId',
                 '$this->createdBy'
-            )");
+            )"
+        );
     }
 
-    public static function show($id) {
+    public static function show($id)
+    {
         $data = DB::select(
             "SELECT
                 course.id AS id,
@@ -132,12 +153,13 @@ class Course extends Model
             LEFT JOIN lecturer_course_rel ON course.id = lecturer_course_rel.course_id
             LEFT JOIN lecturer ON lecturer_course_rel.lecturer_id = lecturer.id
             WHERE course.id = '$id'"
-            );
+        );
 
         return $data;
     }
 
-    public function updates() {
+    public function updates()
+    {
         DB::update(
             "UPDATE `course`
             SET
@@ -156,8 +178,49 @@ class Course extends Model
         );
     }
 
-    public function delete() {
+    public function delete()
+    {
         DB::delete("DELETE FROM lecturer_course_rel WHERE course_id = '$this->courseId'");
         DB::delete("DELETE FROM course WHERE id = '$this->courseId'");
+    }
+
+    // Tìm mọi khóa học thuốc quyền giảng viên đang đăng nhập
+    public function findAllAvailable($lecturerId)
+    {
+        return DB::select(
+            "SELECT c.* FROM course c JOIN lecturer_course_rel lcr on c.id = lcr.course_id WHERE lcr.lecturer_id = ?",
+            [$lecturerId]
+        );
+    }
+
+    public static function checkCourse()
+    {
+        $data = [];
+
+        $classes = DB::select("SELECT * FROM class");
+        foreach ($classes as $class) {
+            // Array chứa thông tin các môn lớp có thể học
+            $subjectInfos = array();
+
+            // Tìm kiếm các môn CHUYÊN NGÀNH của lớp thông qua bảng course_check
+            $subjects = DB::select(
+                "SELECT * FROM subject where id IN (SELECT subject_id from course_check WHERE major_id = ?)",
+                [$class->major_id]
+            );
+            foreach ($subjects as $subject) {
+                array_push($subjectInfos, array($subject->name, $subject->id));
+            }
+
+            // Các môn ĐẠI CƯƠNG
+            $geSubjects = DB::select("SELECT * FROM subject where is_ge = 1");
+            foreach ($geSubjects as $geSubject) {
+
+                array_push($subjectInfos, array($geSubject->name, $geSubject->id));
+            }
+            // Thêm bản ghi chứa id lớp cùng thông tin các môn được học
+            $data[$class->id] = $subjectInfos;
+        }
+        // Chuyển về JSON
+        return json_encode($data, JSON_UNESCAPED_UNICODE);
     }
 }

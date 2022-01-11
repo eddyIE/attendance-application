@@ -40,11 +40,13 @@ class CourseController extends Controller
         $class = Course::classData();
         $subject = Course::subjectData();       //display data for <option></option>
         $lecturer = Course::lecturerData();
+        $checkCourse = Course::checkCourse();
 
-        return view('course/newCourse', compact('class', 'subject', 'lecturer'));
+        return view('course/newCourse', compact('class', 'subject', 'lecturer', 'checkCourse'));
     }
 
-    public function store(Request $request) {
+    public function store(Request $request)
+    {
         $request->validate([
             'courseName' => 'required|max:50',
             'creditHours' => 'bail|required|numeric'
@@ -85,7 +87,8 @@ class CourseController extends Controller
         return view('course/editCourse', compact('data', 'class', 'subject', 'lecturer'));
     }
 
-    public function updates(Request $request) {
+    public function updates(Request $request)
+    {
         $request->validate([
             'courseName' => 'required|max:50',
             'creditHours' => 'bail|required|numeric'

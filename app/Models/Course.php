@@ -192,4 +192,35 @@ class Course extends Model
             [$lecturerId]
         );
     }
+
+    public static function checkCourse()
+    {
+        $data = [];
+
+        $classes = DB::select("SELECT * FROM class");
+        foreach ($classes as $class) {
+            // Array chứa thông tin các môn lớp có thể học
+            $subjectInfos = array();
+
+            // Tìm kiếm các môn CHUYÊN NGÀNH của lớp thông qua bảng course_check
+            $subjects = DB::select(
+                "SELECT * FROM subject where id IN (SELECT subject_id from course_check WHERE major_id = ?)",
+                [$class->major_id]
+            );
+            foreach ($subjects as $subject) {
+                array_push($subjectInfos, array($subject->name, $subject->id));
+            }
+
+            // Các môn ĐẠI CƯƠNG
+            $geSubjects = DB::select("SELECT * FROM subject where is_ge = 1");
+            foreach ($geSubjects as $geSubject) {
+
+                array_push($subjectInfos, array($geSubject->name, $geSubject->id));
+            }
+            // Thêm bản ghi chứa id lớp cùng thông tin các môn được học
+            $data[$class->id] = $subjectInfos;
+        }
+        // Chuyển về JSON
+        return json_encode($data, JSON_UNESCAPED_UNICODE);
+    }
 }

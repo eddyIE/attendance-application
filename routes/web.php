@@ -3,7 +3,6 @@
 use App\Http\Controllers\AttendanceController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\StudentController;
-use App\Http\Controllers\AttendanceController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\CourseController;
 use App\Http\Controllers\ClassController;
@@ -21,6 +20,7 @@ use App\Http\Controllers\SchoolYearController;
 | contains the "web" middleware group. Now create something great!
 |
 */
+Route::get('/', function() { return view('layout');});
 
 Route::get('/login', [LoginController::class, 'loginView'])->name('login');
 

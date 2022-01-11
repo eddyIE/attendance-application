@@ -20,15 +20,15 @@
     <link rel="stylesheet" href="{{ asset('css/adminlte.min.css') }}">
     <!-- overlayScrollbars -->
     <link rel="stylesheet" href="{{ asset('css/overlayScrollbars/OverlayScrollbars.min.css') }}">
-
+    @yield('css')
 </head>
 
 @if (session('role') == 1)
 
-    <body class="hold-transition sidebar-mini layout-fixed sidebar-collapse">
+    <body class="hold-transition sidebar-mini layout-fixed sidebar-collapse" onload="resetSelection()">
     @else
 
-        <body class="hold-transition layout-fixed sidebar-collapse">
+        <body class="hold-transition layout-fixed sidebar-collapse" onload="currentDate()">
 @endif
 <div class="wrapper">
 
@@ -264,6 +264,7 @@
             });
         });
     </script>
+    @yield('course-dropdown-js')
     </body>
 
 </html>

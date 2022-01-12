@@ -23,7 +23,6 @@ class Lesson extends Model
     // subject: 61cc7606edb0e
     public function create()
     {
-        $this->lecturerId = '5ece4797eaf5e';
         DB::insert("INSERT INTO lesson(id, start, end, note, lecturer_id, course_id, created_by)
         VALUES ('$this->id', '$this->start', '$this->end', '$this->note', '$this->lecturerId', '$this->courseId', 'admin')");
     }
@@ -33,9 +32,10 @@ class Lesson extends Model
         return DB::select('select * from lesson where course_id = ?', [$courseId]);
     }
 
-    public static function findByDate($date)
+    public static function findByDateAndCourseId($date, $courseId)
     {
-        $query = "select * from lesson where created_at like '%$date%'";
+        $query = "select * from lesson where created_at like '%$date%' AND course_id = '$courseId'";
+        // dump($query);
         return DB::select($query);
     }
 

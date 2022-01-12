@@ -1,4 +1,5 @@
 @extends('layout')
+@section('title', 'BKACAD - Điểm danh')
 @section('css')
     <style>
         /* h2 {
@@ -52,7 +53,7 @@
             height: 100%;
             width: 32px;
             right: 10px;
-            top: 8px;
+            top: 7px;
         }
 
         .select-box .course-container.active {
@@ -145,14 +146,14 @@
                 @endforeach
             </div>
             <div class="selected">
-                Chọn lớp điểm danh
+                CHỌN LỚP...
             </div>
             <div class="search-box">
                 <input type="text" placeholder="Tìm kiếm...">
             </div>
         </div>
 
-        <input type="submit" class="btn btn-primary fs-5 fw-bold fst-italic text-white mt-2"
+        <input type="submit" class="btn btn-outline-success fs-5 fw-bold fst-italic mt-2 mb-2 float-right"
             value="Lấy danh sách điểm danh" />
     </form>
     {{-- Thông tin chung --}}
@@ -160,11 +161,11 @@
         @isset($currentCourse)
             <h4>Lớp: <?php echo isset($className) ? $className : 'Chưa có'; ?> </h4>
             <h4>Môn học: <?php echo isset($currentCourse->{'name'}) ? $currentCourse->{'name'} : 'Chưa có'; ?> </h4>
-            <h4>Tổng số giờ: <?php echo isset($currentCourse) ? $currentCourse->{'credit_hours'} : 0; ?> </h4>
+            <h4>Tổng số giờ: <?php echo isset($currentCourse) ? $currentCourse->{'credit_hours'} + 0 : 0; ?> </h4>
             <h4>
-                Số giờ còn lại: <?php echo isset($currentCourse) ? $currentCourse->{'credit_hours'} - $currentCourse->{'finished_hour'} : 0; ?>
+                Số giờ còn lại: <?php echo isset($currentCourse) ? $currentCourse->{'credit_hours'} - $currentCourse->{'finished_hour'} + 0 : 0; ?>
             </h4>
-            <h4>Số buổi đã dạy: <?php echo isset($currentCourse->{'finished_lesson'}) ? $currentCourse->{'finished_lesson'} : 'Chưa có thông tin'; ?></h4>
+            <h4>Số buổi đã dạy: <?php echo isset($currentCourse->{'finished_lesson'}) ? $currentCourse->{'finished_lesson'} : '0'; ?></h4>
         @endisset
     </span>
     <br>
@@ -239,7 +240,8 @@
                             <td>
                                 <input type="text" class="form-control"
                                     name="students[{{ $loop->index + 1 }}][absent_reason]"
-                                    id="<?php echo $each->id; ?>_absent_reason" placeholder="Lý do nghỉ (nếu có)">
+                                    id="<?php echo $each->id; ?>_absent_reason" placeholder="Lý do nghỉ (nếu có)"
+                                    value = "{{ $each->absentReason }}" ?>
                             </td>
                         </tr>
                     @endforeach
@@ -265,6 +267,7 @@
             </div>
             <br>
             {{-- Phần chọn thời gian --}}
+            {{-- Nếu đang xem lại chi tiết buổi học trong phần lịch sử --}}
             @isset($curLessonDate)
                 Ngày điểm danh: <input type="date" name='lesson-date'
                     class='pt-2 pb-2 ps-2 mb-2 me-4 text-primary fs-5 text-center' value="<?php echo date('Y-d-m', strtotime($curLessonDate)); ?>"

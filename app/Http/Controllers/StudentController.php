@@ -18,7 +18,6 @@ class StudentController extends Controller
         // Lấy lại danh sách các courses
         $courses = app('App\Http\Controllers\CourseController')->findAllAvailable($request->session()->get('id'));
         // $courses = app('App\Http\Controllers\CourseController')->findAll();
-
         // Tìm danh sách sinh viên theo course
         $courseId = $request->all()['course-id'];
         $list = StudentDao::findByCourseId($courseId);
@@ -40,7 +39,6 @@ class StudentController extends Controller
                 array_pop($lessons);
             }
         }
-
         return view('attendance.index', compact('list', 'courses', 'currentCourse', 'className', 'lessons'));
     }
 

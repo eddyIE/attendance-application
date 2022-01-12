@@ -24,15 +24,29 @@ class Course extends Model
         return DB::select("select * from course where id = ?", [$id]);
     }
 
-    public static function updateFinishedTime($id, $lessonDuration)
+    public static function updateFinishedTime($id, $lessonDuration, $isNewLesson)
     {
-        $query = "
-        UPDATE course
-        SET
-            finished_hour = finished_hour + $lessonDuration,
-            finished_lesson = finished_lesson + 1
-        WHERE `id` = '$id'
-        ";
+        // Là buổi học mới thì +1 vào số buổi dã dạy, không thì thôi
+        if ($isNewLesson) {
+            $query = "
+            UPDATE course
+            SET
+                finished_hour = finished_hour + ($lessonDuration),
+                finished_lesson = CASE
+                    WHEN (finished_lesson IS NULL) THEN 1
+                    ELSE finished_lesson + 1
+                    END
+            WHERE `id` = '$id'
+            ";
+        } else {
+            $query = "
+            UPDATE course
+            SET
+                finished_hour = finished_hour + ($lessonDuration)
+            WHERE `id` = '$id'
+            ";
+        }
+        dump($query);
         DB::update($query);
     }
 

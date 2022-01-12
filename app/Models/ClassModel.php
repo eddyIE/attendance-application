@@ -85,8 +85,7 @@ class ClassModel extends Model
             JOIN major ON class.major_id = major.id
             JOIN school_year ON class.school_year_id = school_year.id
             WHERE class.id = '$id'
-            GROUP BY id,name,major,school_year,cre_date
-            ORDER BY cre_date ASC
+            ORDER BY cre_date
             "
         );
 

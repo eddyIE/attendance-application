@@ -19,8 +19,10 @@ class LessonController extends Controller
         $lesson->start = $request->start['hour'] . ":" . $request->start['minutes'];
         $lesson->end = $request->end['hour'] . ":" . $request->end['minutes'];
         $lesson->note = $request->note;
+        $lesson->lecturerId = session('id');
         $lesson->courseId = $request->{'current-course-id'};
         $lesson->createdAt = $request->{'lesson-date'};
+        $lesson->createdBy = session('name');
         $lesson->create();
 
         // Cập nhật số buổi và số giờ đã dạy của Khóa học(Course)

@@ -37,7 +37,7 @@
         @if (session('role') == 1)
             <ul class="navbar-nav">
                 <li class="nav-item" style="display: flex;align-items: center">
-                    <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i
+                    <a class="nav-link" data-widget="pushmenu" href="#" role="button" style="color: #156A8F"><i
                             class="fas fa-bars"></i></a>
                 </li>
             </ul>

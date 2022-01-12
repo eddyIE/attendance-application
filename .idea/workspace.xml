@@ -1,12 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="627e9af1-90f2-4414-bcd8-00bbdf2fae8b" name="Changes" comment="validate login &amp; fixed errors">
+    <list default="true" id="627e9af1-90f2-4414-bcd8-00bbdf2fae8b" name="Changes" comment="updated table function">
+      <change beforePath="$PROJECT_DIR$/.env" beforeDir="false" afterPath="$PROJECT_DIR$/.env" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/LoginController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/LoginController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/lang/en/validation.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/lang/en/validation.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/login.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/login.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/schoolyear/newSchoolyear.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/schoolyear/newSchoolyear.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/AttendanceController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/AttendanceController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/LessonController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/LessonController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Models/ClassModel.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/ClassModel.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Models/Lesson.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/Lesson.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/attendance/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/attendance/index.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/layout.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/layout.blade.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -237,6 +240,7 @@
       <workItem from="1641555815041" duration="8305000" />
       <workItem from="1641608413427" duration="31549000" />
       <workItem from="1641695697248" duration="299000" />
+      <workItem from="1641989275888" duration="3056000" />
     </task>
     <servers />
   </component>
@@ -270,7 +274,8 @@
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
     <MESSAGE value="added course function" />
     <MESSAGE value="validate login &amp; fixed errors" />
-    <option name="LAST_COMMIT_MESSAGE" value="validate login &amp; fixed errors" />
+    <MESSAGE value="updated table function" />
+    <option name="LAST_COMMIT_MESSAGE" value="updated table function" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

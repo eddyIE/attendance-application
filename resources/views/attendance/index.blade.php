@@ -653,14 +653,6 @@
                     </select>
                 </span>
             @endisset
-            {{-- Giờ bắt đầu:
-                <input type="time" class="me-4 pt-2 pb-2 ps-2 mb-2 timepicker" id="start" name="start" min="06:00"
-                    max="23:00" value="08:00" required>
-                Giờ kết thúc:
-                <input type="time" class="me-4 pt-2 pb-2 ps-2 mb-2 timepicker" id="end" name="end" min="06:00" max="23:00"
-                    value="12:00" required> --}}
-
-
 
             <textarea class="form-control mb-4 mt-4" placeholder="Ghi chú:" rows="4"></textarea>
             {{-- <button class="btn btn-primary" data-toggle="modal" data-target="bs-example-modal-sm">Hỗ trợ</button> --}}

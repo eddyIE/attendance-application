@@ -46,7 +46,6 @@ class Course extends Model
             WHERE `id` = '$id'
             ";
         }
-        dump($query);
         DB::update($query);
     }
 

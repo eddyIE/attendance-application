@@ -13,6 +13,7 @@ class AttendanceController extends Controller
 {
     public function create(Request $request)
     {
+
         // dump($request);
         // Check buổi học đã tồn tại theo ngày tạo
         if (app('App\Http\Controllers\LessonController')->lessonIsExist($request->{'lesson-date'}, $request->{'current-course-id'})) {
@@ -36,6 +37,7 @@ class AttendanceController extends Controller
                 $attendance->create();
             }
         }
+
         // return redirect('/index');
         // Thêm request param để StudentController->StudentList lấy
         $request->request->add(['course-id' => $request->{'current-course-id'}]);

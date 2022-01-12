@@ -20,9 +20,10 @@ class LessonController extends Controller
         $lesson->start = $request->start['hour'] . ":" . $request->start['minutes'];
         $lesson->end = $request->end['hour'] . ":" . $request->end['minutes'];
         $lesson->note = $request->note;
+        $lesson->lecturerId = session('id');
         $lesson->courseId = $request->{'current-course-id'};
         $lesson->createdAt = $request->{'lesson-date'};
-        $lesson->lecturerId = Session::get('id');
+        $lesson->createdBy = session('name');
         $lesson->create();
 
         self::lessonDurationHandler($lesson->start, $lesson->end, $lesson->courseId);

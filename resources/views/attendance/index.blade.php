@@ -179,13 +179,16 @@
                 <input type="hidden" name='current-course-id' value='<?php echo $currentCourse->id; ?>'>
             @endisset
             {{-- Danh sách điểm danh --}}
-            <table class="table table-striped align-middle table-bordered">
-                <tr class="bg-dark">
-                    <th td class="text-center fs-5 text-white">STT</th>
-                    <th class="fs-5 text-white">Tên sinh viên</th>
-                    <th td class="text-center fs-5 text-white" colspan="4">Điểm danh</th>
-                    <th class="fs-5 text-white">Ghi chú</th>
-                </tr>
+            <table id="example2" class="table table-striped align-middle table-bordered">
+                <thead>
+                    <tr class="bg-dark">
+                        <th td class="text-center fs-5 text-white">STT</th>
+                        <th class="fs-5 text-white">Tên sinh viên</th>
+                        <th td class="text-center fs-5 text-white" colspan="4">Điểm danh</th>
+                        <th class="fs-5 text-white">Ghi chú</th>
+                    </tr>
+                </thead>
+                <tbody>
                 @isset($list)
                     @foreach ($list as $each)
                         <tr>
@@ -246,6 +249,7 @@
                         </tr>
                     @endforeach
                 @endisset
+                </tbody>
             </table>
             <br>
             {{-- Lịch sử các buổi học --}}

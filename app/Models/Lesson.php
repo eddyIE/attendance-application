@@ -24,7 +24,7 @@ class Lesson extends Model
     public function create()
     {
         DB::insert("INSERT INTO lesson(id, start, end, note, lecturer_id, course_id, created_by)
-        VALUES ('$this->id', '$this->start', '$this->end', '$this->note', '$this->lecturerId', '$this->courseId', 'admin')");
+        VALUES ('$this->id', '$this->start', '$this->end', '$this->note', '$this->lecturerId', '$this->courseId', '$this->createdBy')");
     }
 
     public static function findByCourseId($courseId)

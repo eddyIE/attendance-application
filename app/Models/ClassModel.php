@@ -27,8 +27,7 @@ class ClassModel extends Model
             FROM `class`
             LEFT JOIN major ON class.major_id = major.id
             LEFT JOIN school_year ON class.school_year_id = school_year.id
-            ORDER BY
-                cre_date ASC"
+            ORDER BY class.created_at DESC"
         );
 
         return $data;
@@ -84,9 +83,7 @@ class ClassModel extends Model
             JOIN student ON class.id = student.class_id
             JOIN major ON class.major_id = major.id
             JOIN school_year ON class.school_year_id = school_year.id
-            WHERE class.id = '$id'
-            ORDER BY cre_date ASC
-            "
+            WHERE class.id = '$id'"
         );
 
         return $data;

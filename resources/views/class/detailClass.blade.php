@@ -1,10 +1,10 @@
 @extends('layout')
 
-@section('title', 'CHI TIẾT KHÓA HỌC')
+@section('title', $data[0]->name)
 
 @section('content')
 
-    <div class="col-md-6">
+    <div class="col-md-4">
         <!-- general form elements -->
         <div class="card card-gray">
             <div class="card-header">
@@ -15,6 +15,10 @@
                 <div class="form-group">
                     <label for="name">Tên lớp học</label>
                     <input type="text" class="form-control" id="name" name="name" value="{{ $data[0]->name }}" disabled>
+                </div>
+                <div class="form-group">
+                    <label for="name">Sĩ số</label>
+                    <input type="text" class="form-control" id="name" name="name" value="{{ $data[0]->quantity }}" disabled>
                 </div>
                 <div class="row">
                     <div class="col">

@@ -9,7 +9,6 @@ use Illuminate\Support\Facades\DB;
 class Student extends Model
 {
     use HasFactory;
-
     public $id;
     public $name;
     public $phone;

@@ -4,11 +4,11 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use DB;
 
-class AttendanceModel extends Model
+class Attendance extends Model
 {
     use HasFactory;
-
     public $id;
     public $status;
     public $absentReason;

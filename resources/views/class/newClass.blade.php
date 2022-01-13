@@ -4,7 +4,7 @@
 
 @section('content')
 
-    <div class="col-md-6">
+    <div class="col-md-4">
         <!-- general form elements -->
         <div class="card card-gray">
             <div class="card-header">
@@ -17,6 +17,9 @@
                 <div class="card-body">
                     <div class="form-group">
                         <label for="name">Tên lớp học</label>
+                        @error('className')
+                        <div class="danger text-red" style="float:right">{{ $message }}</div>
+                        @enderror
                         <input type="text" class="form-control" id="name" name="className" autocomplete="off">
                     </div>
                     <div class="row">

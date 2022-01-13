@@ -25,7 +25,7 @@ function processLogin() {
       success : function(r) {
         console.log(r);
         switch(r.error) {
-          case 'empty' : 
+          case 'empty' :
             $('.alert span').html('Please fill all the credentials !');
             $('.alert').removeClass('hidden');
             break;
@@ -50,7 +50,7 @@ function processLogin() {
             window.location="";
             break;
         }
-      }    
+      }
     });
     return false;
   });
@@ -80,17 +80,17 @@ function processSignup() {
       return false;
     }
     if(!verify('phone',data.phone)) {
-      $('.alert span').html('Invalid Phone');  
+      $('.alert span').html('Invalid Phone');
       $('.alert').removeClass('hidden');
       return false;
     }
     if(!verify('email',data.email)) {
-      $('.alert span').html('Invalid Email');  
+      $('.alert span').html('Invalid Email');
       $('.alert').removeClass('hidden');
       return false;
     }
     if(!verify('name',data.name)) {
-      $('.alert span').html('Invalid Name');  
+      $('.alert span').html('Invalid Name');
       $('.alert').removeClass('hidden');
       return false;
     }
@@ -103,41 +103,41 @@ function processSignup() {
         console.log(r);
         switch(r.error) {
           case 'email' :
-            $('.alert span').html('Invalid Email');  
+            $('.alert span').html('Invalid Email');
             $('.alert').removeClass('hidden');
           break;
           case 'phone' :
-            $('.alert span').html('Invalid Phone');  
+            $('.alert span').html('Invalid Phone');
             $('.alert').removeClass('hidden');
           break;
           case 'name' :
-            $('.alert span').html('Invalid Name');  
+            $('.alert span').html('Invalid Name');
             $('.alert').removeClass('hidden');
           break;
-          case 'empty' : 
-            $('.alert span').html('Fill all the details');  
+          case 'empty' :
+            $('.alert span').html('Fill all the details');
             $('.alert').removeClass('hidden');
           break;
-          case 'mismatch' : 
-            $('.alert span').html('Password don\'t match');  
+          case 'mismatch' :
+            $('.alert span').html('Password don\'t match');
             $('.alert').removeClass('hidden');
           break;
-          case 'small' : 
-            $('.alert span').html('Password is too small! It should be at least 6 characters long');  
+          case 'small' :
+            $('.alert span').html('Password is too small! It should be at least 6 characters long');
             $('.alert').removeClass('hidden');
           break;
-          case 'exists' : 
-            $('.alert span').html('There already exists an account with that email ID. Try logging in.');            
+          case 'exists' :
+            $('.alert span').html('There already exists an account with that email ID. Try logging in.');
             $('.alert').removeClass('hidden');
             $("form#login input[name=email]").val($("form#signup input[name=email]").val());
             $("form#login input[name=email]").focus();
           break;
-          case 'db_error' : 
-            $('.alert span').html('We are facing troubles at our server side !');  
+          case 'db_error' :
+            $('.alert span').html('We are facing troubles at our server side !');
             $('.alert').removeClass('hidden');
           break;
-          case 'none' : 
-            $('.alert span').html('You have successfully signed up! Login using the same credentials now.');  
+          case 'none' :
+            $('.alert span').html('You have successfully signed up! AdminAuthenticate using the same credentials now.');
             $("form#login input[name=email]").val($("form#signup input[name=email]").val());
             $("form#login input[name=email]").focus();
             $('.alert').removeClass('hidden');
@@ -145,7 +145,7 @@ function processSignup() {
             $('.alert').addClass('alert-success');
           break;
         }
-      }    
+      }
     });
     return false;
   });

@@ -29,8 +29,15 @@
             <h1><b>Đăng Nhập</b></h1>
         </div>
         <div class="card-body">
+            @if($errors->any())
+            <div class="alert alert-danger">
+                @foreach($errors->all() as $message)
+                {{ $message }}<br>
+                @endforeach
+            </div>
+            @else
             <p class="login-box-msg">Sign in to start your session</p>
-
+            @endif
             <form action="" method="post">
                 @csrf
                 <div class="input-group mb-3">
@@ -50,14 +57,7 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-8">
-                        <div class="icheck-primary">
-                            <input type="checkbox" id="remember">
-                            <label for="remember">
-                                Lưu tên đăng nhập
-                            </label>
-                        </div>
-                    </div>
+                    <div class="col-8"></div>
                     <!-- /.col -->
                     <div class="col-4">
                         <button type="submit" class="btn btn-primary btn-block">Đăng Nhập</button>

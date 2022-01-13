@@ -10,8 +10,7 @@
         integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
     <link rel="stylesheet" href="{{ asset('css/style.css') }}">
     <!-- Google Font: Source Sans Pro -->
-    <link rel="stylesheet"
-        href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
     <!-- Font Awesome -->
     <link rel="stylesheet" href="{{ asset('css/fontawesome-free/css/all.min.css') }}">
     <!-- DataTables -->
@@ -37,19 +36,19 @@
         @if (session('role') == 1)
             <ul class="navbar-nav">
                 <li class="nav-item" style="display: flex;align-items: center">
-                    <a class="nav-link" data-widget="pushmenu" href="#" role="button" style="color: #156A8F"><i
-                            class="fas fa-bars"></i></a>
+                    <a class="nav-link" data-widget="pushmenu" href="#" role="button" style="color: #156A8F">
+                        <i class="fas fa-bars"></i>
+                    </a>
                 </li>
             </ul>
         @endif
         <div class="container">
-            <div class="navbar-header" style="float:left">
+            <div class="navbar-header">
                 <a class="navbar-brand text-uppercase text-white fw-bold fs-1" href="index">Hệ thống điểm danh</a>
             </div>
             <ul class="navbar-nav float-right" style="float:right">
                 <li class="nav-item"><a class="nav-link text-white fs-5" href="#">{{ session('name') }}</a></li>
-                <li class="nav-item"><a class="nav-link text-white fs-5" href="{{ route('logout') }}">Đăng
-                        xuất</a></li>
+                <li class="nav-item"><a class="nav-link text-white fs-5" href="{{ route('logout') }}">Đăng xuất</a></li>
             </ul>
         </div>
     </nav>
@@ -195,7 +194,7 @@
     @endif
 
     <!-- Content Wrapper. Contains page content -->
-    <div class="content-wrapper full-width-chart">
+    <div class="content-wrapper">
         <!-- Content Header (Page header) -->
         <div class="content-header">
             <div class="container-fluid">
@@ -205,16 +204,8 @@
                     </div>
                 </div>
             </div>
-
-            <!-- Main content -->
-            <section class="content">
-                <div class="container-fluid">
-
-                    <!-- /.row (main row) -->
-                </div><!-- /.container-fluid -->
-            </section>
-            <!-- /.content -->
         </div>
+    </div>
         <!-- /.content-wrapper -->
         <footer class="main-footer">
             <strong>Copyright &copy; 2014-2021 <a href="https://adminlte.io">AdminLTE.io</a>.</strong>
@@ -223,11 +214,6 @@
                 <b>Version</b> 3.1.0
             </div>
         </footer>
-
-        <!-- Control Sidebar -->
-        <aside class="control-sidebar control-sidebar-dark">
-            <!-- Control sidebar content goes here -->
-        </aside>
         <!-- /.control-sidebar -->
     </div>
     <!-- ./wrapper -->
@@ -254,7 +240,7 @@
                 "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
             }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
             $('#example2').DataTable({
-                "paging": false,
+                "paging": true,
                 "lengthChange": false,
                 "searching": true,
                 "ordering": true,
@@ -265,6 +251,5 @@
         });
     </script>
     @yield('course-dropdown-js')
-    </body>
-
+</body>
 </html>

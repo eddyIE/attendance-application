@@ -44,7 +44,7 @@
 
         .selected::after {
             content: "";
-            background: url("../../public/img/arrow-down.svg");
+            background: url("{{ asset('img/arrow-down.svg') }}");
             background-size: contain;
             background-repeat: no-repeat;
 

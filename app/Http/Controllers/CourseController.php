@@ -120,9 +120,9 @@ class CourseController extends Controller
         return redirect()->route('course');
     }
 
-    public function updateFinishedTime($courseId, $duration)
+    public function updateFinishedTime($courseId, $duration, $isNewLesson)
     {
-        Course::updateFinishedTime($courseId, $duration);
+        Course::updateFinishedTime($courseId, $duration, $isNewLesson);
     }
 
     // Tìm mọi khóa học thuốc quyền giảng viên đang đăng nhập

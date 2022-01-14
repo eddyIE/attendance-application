@@ -27,10 +27,12 @@ class StudentDao extends Model
         $absents = array();
         $permissions = array();
         $currentStatuses = array();
+        // Array reasons chứa lí do nghỉ của một học sinh trong buổi học ngày học = $lessonDate
+        $reasons = array();
         if ($lessonDate == null) {
             $lessonDate = Carbon::now()->toDateString();
         }
-        self::getAbsentQuantity($courseId, $lessonDate, $absents, $permissions, $currentStatuses);
+        self::getAbsentQuantity($courseId, $lessonDate, $absents, $permissions, $currentStatuses, $reasons);
 
         $course = Course::findById($courseId);
         if (!isset($course) || count($course) == 0) {
@@ -50,25 +52,36 @@ class StudentDao extends Model
             $newStudent->absents = isset($absents[$newStudent->id]) ? $absents[$newStudent->id] : 0;
             $newStudent->permission = isset($permissions[$newStudent->id]) ? $permissions[$newStudent->id] : 0;
             $newStudent->currentStatus = isset($currentStatuses[$newStudent->id]) ? $currentStatuses[$newStudent->id] : "";
+            $newStudent->absentReason = isset($reasons[$newStudent->id]) ? $reasons[$newStudent->id] : "";
             array_push($result, $newStudent);
         }
         return $result;
     }
 
     // Lấy số lượng buổi nghỉ/phép
-    private static function getAbsentQuantity($courseId, $lessonDate, &$absents, &$permissions, &$currentStatuses)
+    private static function getAbsentQuantity($courseId, $lessonDate, &$absents, &$permissions, &$currentStatuses, &$reasons)
     {
-        $lessons = Lesson::findByCourseId($courseId);
-
-        // Nếu buổi học đã tồn tại thì truyền data vào currentStatuses lưu trạng thái điểm danh hiện tại
-        if (app('App\Http\Controllers\LessonController')->lessonIsExist($lessonDate)) {
-            $lesson = Lesson::findByDate($lessonDate)[0];
+        // Check nếu buổi học đã tồn tại:
+        // -> currentStatus chứa trạng thái đi học của từng sinhh viên
+        // -> reasons chứa lí do nghỉ của từng sv
+        if (app('App\Http\Controllers\LessonController')->lessonIsExist($lessonDate, $courseId)) {
+            // Tìm lesson
+            $lesson = Lesson::findByDateAndCourseId($lessonDate, $courseId)[0];
+            // Lấy bản ghi về trạng thái đi học của sv trong buổi học vừa tìm được
             $attendances = Attendance::findByLessonId($lesson->id);
+
             foreach ($attendances as $attendance) {
+                // Set trạng thái đi học của sinh viên trong buổi học vào mảng, ko có thì ko xét
+                //   xử lí null ở dòng ~54
+                // Kết quả buối cùng sẽ dưới dạng: $currentStatuses = ("61basdjbda" => "with reason", "51aj7nn4ba" => "late");
                 $currentStatuses[$attendance->student_id] = $attendance->status;
+                // Tương tự như trên nhưng là về lý do nghỉ
+                // Kết quả buối cùng sẽ dưới dạng: $currentStatuses = ("61basdjbda" => "Người nhà mất", "51aj7nn4ba" => "Ngã xe nên đi muộn");
+                $reasons[$attendance->student_id] = $attendance->absent_reason;
             }
         }
 
+        $lessons = Lesson::findByCourseId($courseId);
         // Đếm số buổi nghỉ/phép của sinh viên dựa theo các bản ghi attendance
         foreach ($lessons as $lesson) {
             $attends = Attendance::findByLessonId($lesson->id);

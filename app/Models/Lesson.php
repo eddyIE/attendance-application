@@ -32,9 +32,10 @@ class Lesson extends Model
         return DB::select('select * from lesson where course_id = ?', [$courseId]);
     }
 
-    public static function findByDate($date)
+    public static function findByDateAndCourseId($date, $courseId)
     {
-        $query = "select * from lesson where created_at like '%$date%'";
+        $query = "select * from lesson where created_at like '%$date%' AND course_id = '$courseId'";
+        // dump($query);
         return DB::select($query);
     }
 

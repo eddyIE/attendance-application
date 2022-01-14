@@ -10,20 +10,23 @@ use Redirect;
 
 class ClassController extends Controller
 {
-    public function index() {
+    public function index()
+    {
         $data = ClassModel::index();
 
-        return view('class/class',compact('data'));
+        return view('class/class', compact('data'));
     }
 
-    public function create() {
+    public function create()
+    {
         $major = ClassModel::majorData();
         $schoolyear = ClassModel::schoolyearData();
 
-        return view('class/newClass',compact('major','schoolyear'));
+        return view('class/newClass', compact('major', 'schoolyear'));
     }
 
-    public function store(Request $request) {
+    public function store(Request $request)
+    {
         $request->validate([
             'className' => 'bail|required|max:50'
         ]);
@@ -40,24 +43,26 @@ class ClassController extends Controller
         return redirect()->route('class');
     }
 
-    public function detail(Request $request) {
+    public function detail(Request $request)
+    {
         $id = $request->id;                     //display data from id
         $data = ClassModel::show($id);
-
-        return view('class/detailClass',compact('data'));
+        return view('class/detailClass', compact('data'));
     }
 
-    public function edit(Request $request) {
+    public function edit(Request $request)
+    {
         $major = ClassModel::majorData();
         $schoolyear = ClassModel::schoolyearData();
 
         $id = $request->id;                     //display data from id
         $data = ClassModel::show($id);
 
-        return view('class/editClass',compact('data','major','schoolyear'));
+        return view('class/editClass', compact('data', 'major', 'schoolyear'));
     }
 
-    public function updates(Request $request) {
+    public function updates(Request $request)
+    {
         $request->validate([
             'className' => 'bail|required|max:50'
         ]);
@@ -74,7 +79,8 @@ class ClassController extends Controller
         return redirect()->route('class');
     }
 
-    public function delete(Request $request) {
+    public function delete(Request $request)
+    {
         $course = new ClassModel();
 
         $course->classId = $request->route('id');

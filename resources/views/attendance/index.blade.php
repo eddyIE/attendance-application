@@ -45,7 +45,7 @@
 
         .selected::after {
             content: "";
-            background: url("../../public/img/arrow-down.svg");
+            background: url("{{ asset('img/arrow-down.svg') }}");
             background-size: contain;
             background-repeat: no-repeat;
 
@@ -179,7 +179,7 @@
                 <input type="hidden" name='current-course-id' value='<?php echo $currentCourse->id; ?>'>
             @endisset
             {{-- Danh sách điểm danh --}}
-            <table id="example2" class="table table-striped align-middle table-bordered">
+            <table id="example1" class="table table-striped align-middle table-bordered">
                 <thead>
                     <tr class="bg-dark">
                         <th td class="text-center fs-5 text-white">STT</th>

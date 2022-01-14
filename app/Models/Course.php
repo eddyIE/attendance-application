@@ -51,20 +51,6 @@ class Course extends Model
 
     public static function index()
     {
-        /*$data = DB::table('course')
-            ->leftJoin('lecturer_course_rel','course.id','=','lecturer_course_rel.id')
-            ->leftJoin('lecturer','lecturer_course_rel.lecturer_id','=','lecturer.id')
-            ->join('class','course.class_id','=','class.id')
-            ->join('subject','course.subject_id','=','subject.id')
-            ->select(DB::raw(
-                'course.name AS course_name,
-                class.name AS class,
-                subject.name AS subject,
-                course.credit_hours AS credit_hours,
-                lecturer.name AS lecturer'
-            ))
-            ->get();*/      //<<<BEAUTIFUL CODE>>> but the lecturer name is returning null...
-
         $data = DB::select(
             "SELECT
                 course.id AS id,
@@ -79,7 +65,7 @@ class Course extends Model
             JOIN SUBJECT ON course.subject_id = SUBJECT.id
             LEFT JOIN lecturer_course_rel ON course.id = lecturer_course_rel.course_id
             LEFT JOIN lecturer ON lecturer_course_rel.lecturer_id = lecturer.id
-            ORDER BY cre_date ASC"
+            ORDER BY course.created_at DESC"
         );
 
         return $data;

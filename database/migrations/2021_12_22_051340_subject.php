@@ -19,6 +19,7 @@ class Subject extends Migration
             $table->integer("total_hours")->unsigned();
             $table->string("created_by",50);
             $table->dateTime("created_at")->useCurrent();
+            $table->boolean('is_ge')->default(0);
 
             //constraint(s)
             $table->primary("id");

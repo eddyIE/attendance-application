@@ -12,7 +12,7 @@ class SchoolYear extends Model
 
     public static function index()
     {
-        $data = DB::select("SELECT *, DATE_FORMAT(created_at,'%d/%m/%Y') as cre_date FROM `school_year`");
+        $data = DB::select("SELECT *, DATE_FORMAT(created_at,'%d/%m/%Y') as cre_date FROM `school_year` ORDER BY created_at DESC");
 
         return $data;
     }

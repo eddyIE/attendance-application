@@ -8,6 +8,7 @@ use App\Models\Lesson;
 use App\CourseController;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Session;
+use ErrorException;
 
 class LessonController extends Controller
 {
@@ -37,8 +38,13 @@ class LessonController extends Controller
 
         $lesson = new Lesson();
         $lesson->id = $updatedLesson->id;
-        $lesson->start = $request->start['hour'] . ":" . $request->start['minutes'];
-        $lesson->end = $request->end['hour'] . ":" . $request->end['minutes'];
+        try {
+            $lesson->start = $request->start['hour'] . ":" . $request->start['minutes'];
+            $lesson->end = $request->end['hour'] . ":" . $request->end['minutes'];
+        } catch (ErrorException $e) {
+            $lesson->start = $updatedLesson->start;
+            $lesson->end = $updatedLesson->end;
+        }
         $lesson->note = $request->note;
         $lesson->courseId = $request->{'current-course-id'};
         $lesson->updateLesson($lesson);

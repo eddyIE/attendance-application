@@ -30,7 +30,7 @@ class StudentDao extends Model
         // Array reasons chứa lí do nghỉ của một học sinh trong buổi học ngày học = $lessonDate
         $reasons = array();
         if ($lessonDate == null) {
-            $lessonDate = Carbon::now()->toDateString();
+            $lessonDate = Carbon::now("Asia/Ho_Chi_Minh")->toDateString();
         }
         self::getAbsentQuantity($courseId, $lessonDate, $absents, $permissions, $currentStatuses, $reasons);
 

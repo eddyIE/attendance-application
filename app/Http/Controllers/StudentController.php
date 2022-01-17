@@ -35,11 +35,12 @@ class StudentController extends Controller
         $lessons = Lesson::findByCourseId($courseId);
         // Bỏ buổi học hôm nay khỏi lịch sử các buổi học
         foreach ($lessons as $lesson) {
-            if (date('Y-m-d', strtotime($lesson->created_at)) == Carbon::now()->toDateString()) {
+            if (date('Y-m-d', strtotime($lesson->created_at)) == Carbon::now("Asia/Ho_Chi_Minh")->toDateString()) {
+                $lessonNote = $lesson->note;
                 array_pop($lessons);
             }
         }
-        return view('attendance.index', compact('list', 'courses', 'currentCourse', 'className', 'lessons'));
+        return view('attendance.index', compact('list', 'courses', 'currentCourse', 'className', 'lessons', 'lessonNote'));
     }
 
     public function getLessonAttendanceList($lessonId)
@@ -58,6 +59,7 @@ class StudentController extends Controller
         $lessonStart['minutes'] = explode(':', $lesson->start)[1];
         $lessonEnd['hour'] = explode(':', $lesson->end)[0];
         $lessonEnd['minutes'] = explode(':', $lesson->end)[1];
+        $lessonNote = $lesson->note;
 
         // Lấy thông tin về course được chọn
         $currentCourse = app('App\Http\Controllers\CourseController')->findById($lesson->course_id);
@@ -76,11 +78,11 @@ class StudentController extends Controller
         $lessons = Lesson::findByCourseId($lesson->course_id);
         // Bỏ buổi học hôm nay khỏi lịch sử các buổi học
         foreach ($lessons as $lesson) {
-            if (date('Y-m-d', strtotime($lesson->created_at)) == Carbon::now()->toDateString()) {
+            if (date('Y-m-d', strtotime($lesson->created_at)) == Carbon::now("Asia/Ho_Chi_Minh")->toDateString()) {
                 array_pop($lessons);
             }
         }
-        return view('attendance.index', compact('list', 'courses', 'currentCourse', 'className', 'lessons', 'curLessonDate', 'lessonStart', 'lessonEnd'));
+        return view('attendance.index', compact('list', 'courses', 'currentCourse', 'className', 'lessons', 'curLessonDate', 'lessonStart', 'lessonEnd', 'lessonNote'));
     }
 
     // public static function StudentList(Request $request)

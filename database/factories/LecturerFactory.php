@@ -140,7 +140,7 @@ class LecturerFactory extends Factory
             'address' => $this->faker->address,
             'gender' => $this->faker->numberBetween($min = 0, $max = 1),
             'username' => $this->faker->userName,
-            'password' => md5('123456'),
+            'password' => md5('bkacad'),
             'role' => '0',
             'created_by' => 'admin',
             'created_at' => now()

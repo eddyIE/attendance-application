@@ -52,21 +52,21 @@ class AttendanceController extends Controller
 
     private function validateTime(Request $request)
     {
-        // try {
-        $start = $request->start['hour'] . ":" . $request->start['minutes'];
-        $end = $request->end['hour'] . ":" . $request->end['minutes'];
-        $current = Carbon::now("Asia/Ho_Chi_Minh")->floorMinutes()->toTimeString();
-        if (strtotime($start) > strtotime($end) ||  strtotime($start) >  strtotime($current)) {
-            // dump("Thời gian ko hợp lệ");
-            return false;
-        }
-        if (((int) explode(":", $current)[0] - (int) $request->end['hour'] == 0 && (int) explode(":", $current)[1] - (int) $request->end['minutes'] > 30)
-            || ((int) explode(":", $current)[0] - (int) $request->end['hour'] > 0)
-        ) {
-            // dump("Buổi học đã kết thúc quá 30p");
-            return false;
-        }
-        // } catch (ErrorException $e) { }
+        try {
+            $start = $request->start['hour'] . ":" . $request->start['minutes'];
+            $end = $request->end['hour'] . ":" . $request->end['minutes'];
+            $current = Carbon::now("Asia/Ho_Chi_Minh")->floorMinutes()->toTimeString();
+            if (strtotime($start) > strtotime($end) ||  strtotime($start) >  strtotime($current)) {
+                // dump("Thời gian ko hợp lệ");
+                return false;
+            }
+            if (((int) explode(":", $current)[0] - (int) $request->end['hour'] == 0 && (int) explode(":", $current)[1] - (int) $request->end['minutes'] > 30)
+                || ((int) explode(":", $current)[0] - (int) $request->end['hour'] > 0)
+            ) {
+                // dump("Buổi học đã kết thúc quá 30p");
+                return false;
+            }
+        } catch (ErrorException $e) { }
         return true;
     }
 }

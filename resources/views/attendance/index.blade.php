@@ -648,7 +648,9 @@
                 </span>
             @endisset
 
-            <textarea class="form-control mb-4 mt-4" placeholder="Ghi chú:" rows="4"></textarea>
+            <textarea class="form-control mb-4 mt-4" placeholder="Ghi chú:" name="note" rows="4"><?php
+                echo ((isset($lessonNote) && $lessonNote != '') ? $lessonNote : '');
+            ?></textarea>
             {{-- <button class="btn btn-primary" data-toggle="modal" data-target="bs-example-modal-sm">Hỗ trợ</button> --}}
             @isset($list)
                 @isset($curLessonDate)

@@ -32,7 +32,7 @@ class Course extends Model
             UPDATE course
             SET
                 finished_hour = CASE
-                    WHEN (finished_lesson IS NULL) THEN $lessonDuration
+                    WHEN (finished_hour IS NULL) THEN $lessonDuration
                     ELSE finished_hour + ($lessonDuration)
                     END,
                 finished_lesson = CASE
@@ -45,7 +45,10 @@ class Course extends Model
             $query = "
             UPDATE course
             SET
-                finished_hour = finished_hour + ($lessonDuration)
+                finished_hour = CASE
+                    WHEN (finished_hour IS NULL) THEN $lessonDuration
+                    ELSE finished_hour + ($lessonDuration)
+                    END
             WHERE `id` = '$id'
             ";
         }

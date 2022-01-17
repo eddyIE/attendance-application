@@ -27,6 +27,6 @@ class LecturerAuthenticate
                     break;
             }
         }
-        abort(404);
+        return redirect()->route('login');
     }
 }

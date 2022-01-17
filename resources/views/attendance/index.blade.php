@@ -648,9 +648,10 @@
                 </span>
             @endisset
 
-            <textarea class="form-control mb-4 mt-4" placeholder="Ghi chú:" name="note" rows="4"><?php
-                echo ((isset($lessonNote) && $lessonNote != '') ? $lessonNote : '');
-            ?></textarea>
+            <textarea class="form-control mb-4 mt-4" placeholder="Ghi chú:" name="note"
+                rows="4"><?php
+                echo isset($lessonNote) && $lessonNote != '' ? $lessonNote : '';
+                ?></textarea>
             {{-- <button class="btn btn-primary" data-toggle="modal" data-target="bs-example-modal-sm">Hỗ trợ</button> --}}
             @isset($list)
                 @isset($curLessonDate)
@@ -668,6 +669,12 @@
                 </form>
             @endisset
         @endisset
+        @if (Session::has('alert'))
+            <script>
+                alert("{!! Session::get('alert') !!}");
+            </script>
+            {!! Session::forget('alert') !!}
+        @endif
     </div>
 
     <script>
@@ -711,11 +718,11 @@
             }
         }
 
-        // function currentDate() {
-        //     let currentDate = new Date()
-        //     let maxDate = currentDate.toISOString().split('T')[0];
-        //     document.getElementsByName("lesson-date")[0].setAttribute('max', maxDate);
-        // }
+        function currentDate() {
+            let currentDate = new Date()
+            let maxDate = currentDate.toISOString().split('T')[0];
+            document.getElementsByName("lesson-date")[0].setAttribute('max', maxDate);
+        }
 
         function showPrevLesson() {
             let x = document.getElementById("prev-lesson");
@@ -805,6 +812,7 @@
             });
         };
     </script>
+
 @endsection
 {{-- @section('course-dropdown-js') --}}
 {{-- @endsection --}}

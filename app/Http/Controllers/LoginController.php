@@ -48,8 +48,9 @@ class LoginController extends Controller
                     return redirect()->route('admin');
                     break;
             }
+        } else {
+            return redirect()->route('login')->withErrors(['msg' => 'Tài khoản không tồn tại.']);
         }
-        return view('login');
     }
 
     public function logOut(Request $request)

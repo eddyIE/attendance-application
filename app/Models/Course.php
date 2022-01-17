@@ -2,9 +2,11 @@
 
 namespace App\Models;
 
+use ErrorException;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Database\QueryException;
 
 class Course extends Model
 {
@@ -185,8 +187,17 @@ class Course extends Model
 
     public function delete()
     {
-        DB::delete("DELETE FROM lecturer_course_rel WHERE course_id = '$this->courseId'");
-        DB::delete("DELETE FROM course WHERE id = '$this->courseId'");
+        try {
+            $curCourse = DB::select("SELECT * FROM course WHERE course_id = '$this->courseId'");
+            if($curCourse->finished_lesson != 0){
+                throw QueryException();
+            }
+            DB::delete("DELETE FROM lecturer_course_rel WHERE course_id = '$this->courseId'");
+            DB::delete("DELETE FROM course WHERE id = '$this->courseId'");
+            return true;
+        } catch (QueryException $e) {
+            return false;
+        }
     }
 
     // Tìm mọi khóa học thuốc quyền giảng viên đang đăng nhập

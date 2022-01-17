@@ -27,6 +27,6 @@ class AdminAuthenticate
                     break;
             }
         }
-        abort(404);
+        return redirect()->route('login');
     }
 }

@@ -33,13 +33,16 @@ class StudentController extends Controller
 
         // Lấy các buổi học đã dạy của khóa (course)
         $lessons = Lesson::findByCourseId($courseId);
+
         // Bỏ buổi học hôm nay khỏi lịch sử các buổi học
+        $lessonNote = '';
         foreach ($lessons as $lesson) {
             if (date('Y-m-d', strtotime($lesson->created_at)) == Carbon::now("Asia/Ho_Chi_Minh")->toDateString()) {
                 $lessonNote = $lesson->note;
                 array_pop($lessons);
             }
         }
+        // Session::flash('alert','Lưu điểm danh thành công');
         return view('attendance.index', compact('list', 'courses', 'currentCourse', 'className', 'lessons', 'lessonNote'));
     }
 

@@ -9,7 +9,7 @@ use App\Http\Controllers\StudentController;
 use Carbon\Carbon;
 use Redirect;
 use ErrorException;
-
+use Illuminate\Support\Facades\Session;
 
 class AttendanceController extends Controller
 {
@@ -47,7 +47,8 @@ class AttendanceController extends Controller
         // return redirect('/index');
         // Thêm request param để StudentController->StudentList lấy
         $request->request->add(['course-id' => $request->{'current-course-id'}]);
-        return StudentController::StudentList($request)->with('alert', 'hello');;
+        Session::flash('alert','Lưu điểm danh thành công');
+        return StudentController::StudentList($request);
     }
 
     private function validateTime(Request $request)

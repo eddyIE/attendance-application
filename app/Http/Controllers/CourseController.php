@@ -115,9 +115,13 @@ class CourseController extends Controller
 
         $course->courseId = $request->route('id');
 
-        $course->delete();
+        if($course->delete()){
+            return redirect()->route('course');
+        }
+        else{
+            return redirect()->back()->withErrors(['msg' => 'Khóa học đã bắt đầu. Không thể xóa']);
+        }
 
-        return redirect()->route('course');
     }
 
     public function updateFinishedTime($courseId, $duration, $isNewLesson)

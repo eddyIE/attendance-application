@@ -33,11 +33,11 @@
 <div class="wrapper">
 
     <!-- Navbar -->
-    <nav class="main-header navbar navbar-expand-sm bg-dark">
+    <nav class="main-header navbar navbar-expand-sm" style="background: #156A8F">
         @if (session('role') == 1)
             <ul class="navbar-nav">
                 <li class="nav-item" style="display: flex;align-items: center">
-                    <a class="nav-link" data-widget="pushmenu" href="#" role="button" style="color: #156A8F"><i
+                    <a class="nav-link" data-widget="pushmenu" href="#" role="button" style="color: #fff"><i
                             class="fas fa-bars"></i></a>
                 </li>
             </ul>

@@ -35,7 +35,7 @@ class StudentController extends Controller
         $lessons = Lesson::findByCourseId($courseId);
         // Bỏ buổi học hôm nay khỏi lịch sử các buổi học
         foreach ($lessons as $lesson) {
-            if (date('Y-m-d', strtotime($lesson->created_at)) == Carbon::now()->toDateString()) {
+            if (date('Y-m-d', strtotime($lesson->created_at)) == Carbon::now("Asia/Ho_Chi_Minh")->toDateString()) {
                 array_pop($lessons);
             }
         }
@@ -76,7 +76,7 @@ class StudentController extends Controller
         $lessons = Lesson::findByCourseId($lesson->course_id);
         // Bỏ buổi học hôm nay khỏi lịch sử các buổi học
         foreach ($lessons as $lesson) {
-            if (date('Y-m-d', strtotime($lesson->created_at)) == Carbon::now()->toDateString()) {
+            if (date('Y-m-d', strtotime($lesson->created_at)) == Carbon::now("Asia/Ho_Chi_Minh")->toDateString()) {
                 array_pop($lessons);
             }
         }

@@ -6,13 +6,20 @@ use Illuminate\Http\Request;
 use App\Models\Attendance;
 use App\Http\Controllers\LessonController;
 use App\Http\Controllers\StudentController;
+use Carbon\Carbon;
 use Redirect;
+use ErrorException;
 
 
 class AttendanceController extends Controller
 {
     public function create(Request $request)
     {
+        $flag = self::validateTime($request);
+        if (!$flag) {
+            $message = "Thời gian buổi học không hợp lệ";
+            return view("error", compact("message"));
+        }
 
         // dump($request);
         // Check buổi học đã tồn tại theo ngày tạo
@@ -21,7 +28,6 @@ class AttendanceController extends Controller
             // Xóa các thông tin điểm danh sẵn có
             Attendance::deleteByLessonId($lessonId);
         } else {
-            dump("ok");
             $lessonId = app('App\Http\Controllers\LessonController')->create($request);
         }
 
@@ -41,6 +47,26 @@ class AttendanceController extends Controller
         // return redirect('/index');
         // Thêm request param để StudentController->StudentList lấy
         $request->request->add(['course-id' => $request->{'current-course-id'}]);
-        return StudentController::StudentList($request)->with('alert','hello');;
+        return StudentController::StudentList($request)->with('alert', 'hello');;
+    }
+
+    private function validateTime(Request $request)
+    {
+        // try {
+        $start = $request->start['hour'] . ":" . $request->start['minutes'];
+        $end = $request->end['hour'] . ":" . $request->end['minutes'];
+        $current = Carbon::now("Asia/Ho_Chi_Minh")->floorMinutes()->toTimeString();
+        if (strtotime($start) > strtotime($end) ||  strtotime($start) >  strtotime($current)) {
+            // dump("Thời gian ko hợp lệ");
+            return false;
+        }
+        if (((int) explode(":", $current)[0] - (int) $request->end['hour'] == 0 && (int) explode(":", $current)[1] - (int) $request->end['minutes'] > 30)
+            || ((int) explode(":", $current)[0] - (int) $request->end['hour'] > 0)
+        ) {
+            // dump("Buổi học đã kết thúc quá 30p");
+            return false;
+        }
+        // } catch (ErrorException $e) { }
+        return true;
     }
 }

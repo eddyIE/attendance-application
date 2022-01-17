@@ -2,15 +2,6 @@
 @section('title', 'BKACAD - Điểm danh')
 @section('css')
     <style>
-        /* h2 {
-                        margin: 16px;
-                    }
-
-                    .container {
-                        margin-top: 100px;
-                        padding: 32px;
-                    } */
-
         .select-box {
             position: relative;
             display: flex;
@@ -45,7 +36,7 @@
 
         .selected::after {
             content: "";
-            background: url("../../public/img/arrow-down.svg");
+            background: url("{{ asset('img/arrow-down.svg') }}");
             background-size: contain;
             background-repeat: no-repeat;
 
@@ -189,66 +180,69 @@
                     </tr>
                 </thead>
                 <tbody>
-                @isset($list)
-                    @foreach ($list as $each)
-                        <tr>
-                            <input type="hidden" name="students[{{ $loop->index + 1 }}][student_id]"
-                                value="{{ $each->id }}" />
-                            <td class="text-center">{{ $loop->index + 1 }}</td>
-                            <td class="">
-                                <span class="roll fw-bolder"><a href="#">{{ $each->name }}</a></span>
-                                <span class="text-danger fw-bold">
-                                    ({{ $each->absents }}/<?php echo isset($currentCourse) ? $currentCourse->{'finished_lesson'} + 1 : ''; ?>)
-                                </span>
-                                <span class="fw-bold fst-italic"> - P:{{ $each->permission }}</span>
-                                <br>
-                                <span class="roll fw-lighter fst-italic">
-                                    @php
-                                        echo '(' . date('d-m-Y', strtotime($each->birthdate)) . ')';
-                                    @endphp
-                                </span>
-                            </td>
-                            <td class="text-center border border-0">
-                                <input type="radio" class="btn-check" name="students[{{ $loop->index + 1 }}][status]"
-                                    value="" id="<?php echo $each->id; ?>_status" checked>
-                                <label class="btn btn-outline-success" for="<?php echo $each->id; ?>_status">
-                                    Có mặt
-                                </label>
-                            </td>
-                            <td class="text-center border border-0">
-                                <input type="radio" class="btn-check" name="students[{{ $loop->index + 1 }}][status]"
-                                    value="without reason" id="<?php echo $each->id; ?>no_reason"
-                                    {{ $each->currentStatus == 'without reason' ? ' checked' : '' }}>
-                                <label class="btn btn-outline-danger" for="<?php echo $each->id; ?>no_reason">
-                                    Nghỉ
-                                </label>
+                    @isset($list)
+                        @foreach ($list as $each)
+                            <tr>
+                                <input type="hidden" name="students[{{ $loop->index + 1 }}][student_id]"
+                                    value="{{ $each->id }}" />
+                                <td class="text-center">{{ $loop->index + 1 }}</td>
+                                <td class="">
+                                    <span class="roll fw-bolder"><a href="#">{{ $each->name }}</a></span>
+                                    <span class="text-danger fw-bold">
+                                        ({{ $each->absents }}/<?php echo isset($currentCourse) ? $currentCourse->{'finished_lesson'} + 1 : ''; ?>)
+                                    </span>
+                                    <span class="fw-bold fst-italic"> - P:{{ $each->permission }}</span>
+                                    <br>
+                                    <span class="roll fw-lighter fst-italic">
+                                        @php
+                                            echo '(' . date('d-m-Y', strtotime($each->birthdate)) . ')';
+                                        @endphp
+                                    </span>
+                                </td>
+                                <td class="text-center border border-0">
+                                    <input type="radio" class="btn-check"
+                                        name="students[{{ $loop->index + 1 }}][status]" value=""
+                                        id="<?php echo $each->id; ?>_status" checked>
+                                    <label class="btn btn-outline-success" for="<?php echo $each->id; ?>_status">
+                                        Có mặt
+                                    </label>
+                                </td>
+                                <td class="text-center border border-0">
+                                    <input type="radio" class="btn-check"
+                                        name="students[{{ $loop->index + 1 }}][status]" value="without reason"
+                                        id="<?php echo $each->id; ?>no_reason"
+                                        {{ $each->currentStatus == 'without reason' ? ' checked' : '' }}>
+                                    <label class="btn btn-outline-danger" for="<?php echo $each->id; ?>no_reason">
+                                        Nghỉ
+                                    </label>
 
-                            </td>
-                            <td class="text-center border border-0">
-                                <input type="radio" class="btn-check" name="students[{{ $loop->index + 1 }}][status]"
-                                    value="late" id="<?php echo $each->id; ?>late"
-                                    {{ $each->currentStatus == 'late' ? ' checked' : '' }}>
-                                <label class="btn btn-outline-dark" for="<?php echo $each->id; ?>late">
-                                    Muộn
-                                </label>
-                            </td>
-                            <td class="text-center border border-0">
-                                <input type="radio" class="btn-check" name="students[{{ $loop->index + 1 }}][status]"
-                                    id="<?php echo $each->id; ?>with_reason" autocomplete="off" value="with reason"
-                                    {{ $each->currentStatus == 'with reason' ? ' checked' : '' }}>
-                                <label class="btn btn-outline-primary" for="<?php echo $each->id; ?>with_reason">
-                                    Có phép
-                                </label>
-                            </td>
-                            <td>
-                                <input type="text" class="form-control"
-                                    name="students[{{ $loop->index + 1 }}][absent_reason]"
-                                    id="<?php echo $each->id; ?>_absent_reason" placeholder="Lý do nghỉ (nếu có)"
-                                    value = "{{ $each->absentReason }}" ?>
-                            </td>
-                        </tr>
-                    @endforeach
-                @endisset
+                                </td>
+                                <td class="text-center border border-0">
+                                    <input type="radio" class="btn-check"
+                                        name="students[{{ $loop->index + 1 }}][status]" value="late"
+                                        id="<?php echo $each->id; ?>late" {{ $each->currentStatus == 'late' ? ' checked' : '' }}>
+                                    <label class="btn btn-outline-dark" for="<?php echo $each->id; ?>late">
+                                        Muộn
+                                    </label>
+                                </td>
+                                <td class="text-center border border-0">
+                                    <input type="radio" class="btn-check"
+                                        name="students[{{ $loop->index + 1 }}][status]" id="<?php echo $each->id; ?>with_reason"
+                                        autocomplete="off" value="with reason"
+                                        {{ $each->currentStatus == 'with reason' ? ' checked' : '' }}>
+                                    <label class="btn btn-outline-primary" for="<?php echo $each->id; ?>with_reason">
+                                        Có phép
+                                    </label>
+                                </td>
+                                <td>
+                                    <input type="text" class="form-control"
+                                        name="students[{{ $loop->index + 1 }}][absent_reason]"
+                                        id="<?php echo $each->id; ?>_absent_reason" placeholder="Lý do nghỉ (nếu có)"
+                                        value="{{ $each->absentReason }}" ?>
+                                </td>
+                            </tr>
+                        @endforeach
+                    @endisset
                 </tbody>
             </table>
             <br>
@@ -658,11 +652,12 @@
             {{-- <button class="btn btn-primary" data-toggle="modal" data-target="bs-example-modal-sm">Hỗ trợ</button> --}}
             @isset($list)
                 @isset($curLessonDate)
+                    <button id="submit" class="btn btn-success mb-3" type="submit">Cập nhật điểm danh</button>
                 </form>
                 <form action="{{ route('course_attendance') }}" method="POST">
                     @csrf
                     <input type="hidden" name='course-id' value='<?php echo $currentCourse->id; ?>'>
-                    <button id="" class="btn btn-success" type="">
+                    <button id="" class="btn btn-primary" type="">
                         Trở về buổi học hiện tại
                     </button>
                 </form>
@@ -675,29 +670,33 @@
 
     <script>
         function validateForm() {
-            // Get current time
-            let now = new Date();
-            let curHour = (now.getHours() < 10) ? ("0" + now.getHours()) : now.getHours();
-            let curMinutes = (now.getMinutes() < 10) ? ("0" + now.getMinutes()) : now.getMinutes();
-            let current = curHour + ":" + curMinutes;
+            // Lấy thời gian hiện tại
+            const now = new Date();
+            const curHour = (now.getHours() < 10) ? ("0" + now.getHours()) : now.getHours();
+            const curMinutes = (now.getMinutes() < 10) ? ("0" + now.getMinutes()) : now.getMinutes();
+            const curTime = `${curHour}:${curMinutes}`;
+
+            // Lấy ngày tháng nếu là buổi hoc cũ => != null => ko check ngày tháng
+            const a = {!! json_encode($curLessonDate ?? null) !!};
+            if (a !== null) {
+                return true;
+            }
             // Get data
-            let start = document.forms["attendanceForm"]["start[hour]"].value + ":" + document.forms["attendanceForm"][
-                "start[minutes]"
-            ].value;
-            let end = document.forms["attendanceForm"]["end[hour]"].value + ":" + document.forms["attendanceForm"][
-                "end[minutes]"
-            ].value;
+            const attendanceForm = document.forms["attendanceForm"];
+            let start = `${attendanceForm["start[hour]"].value}:${attendanceForm["start[minutes]"].value}`;
+            let end = `${attendanceForm["end[hour]"].value}:${attendanceForm["end[minutes]"].value}`;
+
             // VALIDATE
             try {
                 // Seperate data to calculate
-                let curArr = current.split(":");
+                let curArr = curTime.split(":");
                 let endArr = end.split(":");
                 let startArr = start.split(":");
 
                 // - Giờ bắt đầu không sớm hơn giờ kết thúc
                 // - Giờ bắt đầu không sớm hơn hiện tại
                 // - Giờ kết thúc không muộn hơn hiện tại quá 30p
-                if (start > end || start > current) {
+                if (start > end || start > curTime) {
                     alert("Thời gian buổi học không hợp lệ");
                     return false;
                 }
@@ -710,11 +709,11 @@
             }
         }
 
-        function currentDate() {
-            let currentDate = new Date()
-            let maxDate = currentDate.toISOString().split('T')[0];
-            document.getElementsByName("lesson-date")[0].setAttribute('max', maxDate);
-        }
+        // function currentDate() {
+        //     let currentDate = new Date()
+        //     let maxDate = currentDate.toISOString().split('T')[0];
+        //     document.getElementsByName("lesson-date")[0].setAttribute('max', maxDate);
+        // }
 
         function showPrevLesson() {
             let x = document.getElementById("prev-lesson");
@@ -748,6 +747,12 @@
         const selected = document.querySelector(".selected");
         const courseContainer = document.querySelector(".course-container");
         const searchBox = document.querySelector(".search-box input");
+
+        // Lấy tên khóa học hiện tại hiện lên phần chọn lớp
+        const a = {!! json_encode($currentCourse->{'name'} ?? null) !!};
+        if (a !== null) {
+            selected.innerHTML = a;
+        }
 
         const courses = document.querySelectorAll(".course");
 

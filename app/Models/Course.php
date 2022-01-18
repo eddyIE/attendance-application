@@ -188,9 +188,10 @@ class Course extends Model
     public function delete()
     {
         try {
-            $curCourse = DB::select("SELECT * FROM course WHERE course_id = '$this->courseId'");
-            if($curCourse->finished_lesson != 0){
-                throw QueryException();
+            $curCourse = DB::select("SELECT * FROM course WHERE id = '$this->courseId'");
+            // dump($curCourse->finished_lesson);
+            if(isset($curCourse->{'finished_lesson'})){
+                return false;
             }
             DB::delete("DELETE FROM lecturer_course_rel WHERE course_id = '$this->courseId'");
             DB::delete("DELETE FROM course WHERE id = '$this->courseId'");
